@@ -21,6 +21,8 @@ __published:	// IDE-managed Components
 	TListBox *listBox;
 	TButton *addButton;
 	void __fastcall addButtonClick(TObject *Sender);
+	void __fastcall listBoxItemClick(TCustomListBox * const Sender, TListBoxItem * const Item);
+
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);

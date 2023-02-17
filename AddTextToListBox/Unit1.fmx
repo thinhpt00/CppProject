@@ -37,6 +37,7 @@ object Form1: TForm1
     DefaultItemStyles.ItemStyle = ''
     DefaultItemStyles.GroupHeaderStyle = ''
     DefaultItemStyles.GroupFooterStyle = ''
+    OnItemClick = listBoxItemClick
     Viewport.Width = 245.000000000000000000
     Viewport.Height = 196.000000000000000000
   end
