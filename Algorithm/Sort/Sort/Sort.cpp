@@ -29,6 +29,7 @@ void RandomArray(int a[], int n) {
 void BubbleSort(int a[], int n) {
 	bool haveSwaped = false;
 	for (int i = 0; i < n - 1; i++) {
+		haveSwaped = false;
 		for (int j = 0; j < n - i - 1; j++) {
 			if (a[j] > a[j + 1]) {
 				swap(a[j], a[j + 1]);
@@ -41,20 +42,28 @@ void BubbleSort(int a[], int n) {
 	}
 }
 
+void SelectionSort(int a[], int n) {
+	int min;
+	for (int i = 0; i < n-1; i++) {
+		min = i;
+		for (int j = i + 1; j < n; j++) {
+			if (a[min] > a[j]) {
+				min = j;
+			}
+		}
+		swap(a[i], a[min]);
+	}
+}
+
 int main() {
 	cout << "Nhap so luong phan tu cua mang: ";
 	int n; cin >> n;
 	int a[100];
-	//for (int i = 0; i < n; i++) {
-	//	a[i] = rand() % 100;
-	//}
-	//for (int i = 0; i < n; i++) {
-	//	cout << a[i] << "\t";
-	//}
 	//Input(a, n);
 	RandomArray(a, n);
 	Output(a, n);
-	BubbleSort(a, n);
+	//BubbleSort(a, n);
+	SelectionSort(a, n);
 	cout << endl;
 	cout << "==>" << endl;
 	Output(a, n);
