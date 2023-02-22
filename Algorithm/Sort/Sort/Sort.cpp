@@ -55,6 +55,19 @@ void SelectionSort(int a[], int n) {
 	}
 }
 
+void InsertionSort(int a[], int n) {
+	int key, j;
+	for (int i = 1; i < n ; i++) {
+		key = a[i];
+		j = i - 1;
+		while (j >= 0 && a[j] > key) {
+			a[j + 1] = a[j];
+			j--;
+		}
+		a[j+1] = key;
+	}
+}
+
 int main() {
 	cout << "Nhap so luong phan tu cua mang: ";
 	int n; cin >> n;
@@ -63,7 +76,8 @@ int main() {
 	RandomArray(a, n);
 	Output(a, n);
 	//BubbleSort(a, n);
-	SelectionSort(a, n);
+	//SelectionSort(a, n);
+	InsertionSort(a, n);
 	cout << endl;
 	cout << "==>" << endl;
 	Output(a, n);
