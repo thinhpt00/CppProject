@@ -28,17 +28,15 @@ void RandomArray(int a[], int n) {
 
 void BubbleSort(int a[], int n) {
 	bool haveSwaped = false;
-	for (int i = 0; i < n - 1; i++) {
+	for (int i = 0; i < n; i++) {
 		haveSwaped = false;
-		for (int j = 0; j < n - i - 1; j++) {
+		for (int j = 0; j < n-i-1; j++) {
 			if (a[j] > a[j + 1]) {
 				swap(a[j], a[j + 1]);
 				haveSwaped = true;
 			}
 		}
-		if (!haveSwaped) {
-			break;
-		}
+		if (!haveSwaped) break;
 	}
 }
 
@@ -46,7 +44,7 @@ void SelectionSort(int a[], int n) {
 	int min;
 	for (int i = 0; i < n-1; i++) {
 		min = i;
-		for (int j = i + 1; j < n; j++) {
+		for (int j = i+1; j < n; j++) {
 			if (a[min] > a[j]) {
 				min = j;
 			}
@@ -56,15 +54,41 @@ void SelectionSort(int a[], int n) {
 }
 
 void InsertionSort(int a[], int n) {
-	int key, j;
-	for (int i = 1; i < n ; i++) {
+	int key,j;
+	for (int i = 0; i < n; i++) {
 		key = a[i];
 		j = i - 1;
-		while (j >= 0 && a[j] > key) {
+		while (j >= 0 && a[j] < key) {
 			a[j + 1] = a[j];
 			j--;
 		}
-		a[j+1] = key;
+		a[j + 1] = key;
+	}
+}
+
+// Thoat toan sap xep QuickSort
+int Partition(int a[], int low, int high) {
+	int left, right, pivot;
+	left = low;
+	right = high - 1;
+	pivot = a[high];
+
+	while (true) {
+		while (right >= left && a[left] <= pivot) left++;
+		while (right >= left && a[right] >= pivot) right--;
+		if (right <= left) break;
+		swap(a[left], a[right]);
+		left++;
+		right--;
+	}
+	swap(a[left], a[high]);
+	return left;
+}
+void QuickSort(int a[], int low, int high) {
+	if (low < high) {
+		int pi = Partition(a,low, high);
+		QuickSort(a, low, pi - 1);
+		QuickSort(a, pi + 1, high);
 	}
 }
 
@@ -77,7 +101,8 @@ int main() {
 	Output(a, n);
 	//BubbleSort(a, n);
 	//SelectionSort(a, n);
-	InsertionSort(a, n);
+	//InsertionSort(a, n);
+	QuickSort(a, 0, n - 1);
 	cout << endl;
 	cout << "==>" << endl;
 	Output(a, n);
