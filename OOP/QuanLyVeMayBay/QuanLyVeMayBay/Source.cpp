@@ -5,32 +5,32 @@ class date {
 public:
 	int day, month, year;
 	date() {
-		day = month = year = 0;
+		this->day = this->month = this->year = 0;
 	}
 	~date() {
-		day = month = year = 0;
+		this->day = this->month = this->year = 0;
 	}
 	void input() {
 		cout << "\nNgay/thang/nam: ";
-		cin >> day >> month >> year;
-		while (day > 31 || day < 1 || month < 1 || month > 12 || year < 2020 || year > 2050) {
-			if (day > 31 || day < 1) {
+		cin >> this->day >> this->month >> this->year;
+		while (this->day > 31 || this->day < 1 || this->month < 1 || this->month > 12 || this->year < 2020 || this->year > 2050) {
+			if (this->day > 31 || this->day < 1) {
 				cout << "Vui long nhap lai ngay: ";
-				cin >> day;
+				cin >> this->day;
 			}
-			if (month < 1 || month > 12) {
+			if (this->month < 1 || this->month > 12) {
 				cout << "Vui long nhap lai thang: ";
-				cin >> month;
+				cin >> this->month;
 			}
-			if (year < 2020 || year > 2050) {
+			if (this->year < 2020 || this->year > 2050) {
 				cout << "Vui long nhap lai nam: ";
-				cin >> year;
+				cin >> this->year;
 			}
 		}
 
 	}
 	void output(){
-		cout << "Ngay bay: " << day << "/" << month << "/" << year;
+		cout << "Ngay bay: " << this->day << "/" << this->month << "/" << this->year;
 	}
 };
 
@@ -48,25 +48,25 @@ public:
 };
 
 VeMayBay::VeMayBay() {
-	tenChuyen = "";
-	giaVe = 0;
+	this->tenChuyen = "";
+	this->giaVe = 0;
 }
 VeMayBay::~VeMayBay() {
-	tenChuyen = "";
-	giaVe = 0;
+	this->tenChuyen = "";
+	this->giaVe = 0;
 
 }
 void VeMayBay::Nhap() {
-	//cout << "Nhap ten chuyen bay: ";
-	//cin >> this->tenChuyen;
-	//cout << "Nhap ngay bay: ";
-	//ngayBay.input();
+	cout << "Nhap ten chuyen bay: ";
+	cin >> this->tenChuyen;
+	cout << "Nhap ngay bay: ";
+	ngayBay.input();
 	cout << "Nhap gia ve: ";
 	cin >> this->giaVe;
 }
 void VeMayBay::Xuat() {
-	//cout << "Ten chuyen bay: " << this->tenChuyen << endl;
-	//ngayBay.output();
+	cout << "Ten chuyen bay: " << this->tenChuyen << endl;
+	ngayBay.output();
 	cout << "\nGia ve: " << this->giaVe << endl;
 }
 int VeMayBay::getGiaVe() {
@@ -75,8 +75,8 @@ int VeMayBay::getGiaVe() {
 
 class Nguoi {
 public:
-	string hoTen, gioiTinh;
-	int tuoi;
+	string hoTen, gioiTinh,diaChi;
+	int tuoi,sdt;
 	Nguoi();
 	~Nguoi();
 	void Nhap();
@@ -85,26 +85,31 @@ public:
 };
 
 Nguoi::Nguoi() {
-	hoTen = gioiTinh = "";
-	tuoi = 0;
+	this->hoTen = this->gioiTinh = this->diaChi = "";
+	this->tuoi = this->sdt = 0;
 }
 Nguoi::~Nguoi() {
-	hoTen = gioiTinh = "";
-	tuoi = 0;
+	this->hoTen = this->gioiTinh = this->diaChi = "";
+	this->tuoi = this->sdt = 0;
 }
 void Nguoi::Nhap() {
 	cout << "Nhap ho ten: ";
-	cin >> hoTen;
-	//cout << "Nhap gioi tinh: ";
-	//cin >> gioiTinh;
-	//cout << "Nhap tuoi: ";
-	//cin >> tuoi;
+	cin >> this->hoTen;
+	cout << "Nhap gioi tinh: ";
+	cin >> this->gioiTinh;
+	cout << "Nhap tuoi: ";
+	cin >> this->tuoi;
+	cout << "Nhap so dien thoai: ";
+	cin >> this->sdt;
+	cout << "Nhap dia chi: ";
+	cin >> this->diaChi;
 }
 void Nguoi::Xuat() {
-	cout << "Ten: " << hoTen << endl;
-	//cout << "Gioi tinh: " << gioiTinh << endl;
-	//cout << "Tuoi: " << tuoi << endl;
-
+	cout << "Ten: " << this->hoTen << endl;
+	cout << "Gioi tinh: " << this->gioiTinh << endl;
+	cout << "Tuoi: " << this->tuoi << endl;
+	cout << "So dien thoai: " << this->sdt << endl;
+	cout << "Dia chi: " << this->diaChi << endl;
 }
 
 class HanhKhach:public Nguoi {
@@ -123,19 +128,19 @@ public:
 };
 
 HanhKhach::HanhKhach() {
-	ve[soLuong];
-	soLuong = tongtien = 0;
+	ve[this->soLuong];
+	this->soLuong = this->tongtien = 0;
 }
 HanhKhach::~HanhKhach() {
 	//delete []ve;
-	soLuong = tongtien = 0;
+	this->soLuong = this->tongtien = 0;
 }
 void HanhKhach::Nhap() {
 	Nguoi::Nhap();
 	cout << "Nhap so luong ve hanh khach da mua: ";
-	cin >> soLuong;
-	ve[soLuong];
-	for (int i = 0; i < soLuong; i++) {
+	cin >> this->soLuong;
+	ve[this->soLuong];
+	for (int i = 0; i < this->soLuong; i++) {
 		cout << "\n\tNhap thong tin chuyen bay " << i + 1 << endl;
 		ve[i].Nhap();
 		tongtien += ve[i].getGiaVe();
@@ -145,12 +150,12 @@ void HanhKhach::Xuat() {
 	cout << "\n***THONG TIN KHACH HANG*** " << endl;
 	Nguoi::Xuat();
 	cout << "\n--THONG TIN CHUYEN BAY-- " << endl;
-	for (int i = 0; i < soLuong; i++) {
+	for (int i = 0; i < this->soLuong; i++) {
 		ve[i].Xuat();
-		cout << "--------------------";
 		cout << endl;
 	}
-	cout << "==>Tong so tien la: " << tongtien << endl;
+	cout << "  ==>Tong so tien la: " << this->tongtien << endl;
+	cout << "------------------------------";
 }
 
 void Swap(HanhKhach& a, HanhKhach& b) {
@@ -183,15 +188,21 @@ int main() {
 		cout << "\n   NHAP THONG TIN NGUOI " << i + 1 << endl;
 		x[i].Nhap();
 	}	
-	cout << endl << "\t\nOUTPUT" << endl;
+	system("cls");
+	cout << endl << "\tDANH SACH KHACH HANG" << endl;
 	for (int i = 0; i < n; i++) {
 		x[i].Xuat();
 	}
-	BubbleSort(x,n);
-	cout << endl << "\t\nSAU KHI SAP XEP" << endl;
-	for (int i = 0; i < n; i++) {
-		x[i].Xuat();
+	cout << "\nBan co muon sap xep danh sach khong? y/n" << endl;
+	char check; cin >> check;
+	if (check == 'y') {
+		system("cls");
+		BubbleSort(x, n);
+		cout << endl << "\tSAU KHI SAP XEP" << endl;
+		for (int i = 0; i < n; i++) {
+			x[i].Xuat();
+		}
 	}
-
+	
 	system("pause");
 }
