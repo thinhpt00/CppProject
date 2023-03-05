@@ -1,4 +1,5 @@
 #include<iostream>
+#include<string>
 using namespace std;
 
 class date {
@@ -93,8 +94,9 @@ Nguoi::~Nguoi() {
 	this->tuoi = this->sdt = 0;
 }
 void Nguoi::Nhap() {
+	cin.ignore();
 	cout << "Nhap ho ten: ";
-	cin >> this->hoTen;
+	getline(cin, this->hoTen);
 	cout << "Nhap gioi tinh: ";
 	cin >> this->gioiTinh;
 	cout << "Nhap tuoi: ";
@@ -102,7 +104,8 @@ void Nguoi::Nhap() {
 	cout << "Nhap so dien thoai: ";
 	cin >> this->sdt;
 	cout << "Nhap dia chi: ";
-	cin >> this->diaChi;
+	cin.ignore();
+	getline(cin, this->diaChi);
 }
 void Nguoi::Xuat() {
 	cout << "Ten: " << this->hoTen << endl;
