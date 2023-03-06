@@ -22,35 +22,27 @@ class Ui_Widget
 {
 public:
     QListWidget *listWidget;
-    QLabel *studentName;
-    QLabel *studentDOB;
-    QLabel *studentClass;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
+    QLabel *label;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QString::fromUtf8("Widget"));
-        Widget->resize(800, 600);
+        Widget->resize(561, 419);
         listWidget = new QListWidget(Widget);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setGeometry(QRect(110, 170, 501, 281));
-        studentName = new QLabel(Widget);
-        studentName->setObjectName(QString::fromUtf8("studentName"));
-        studentName->setGeometry(QRect(110, 90, 191, 20));
-        studentDOB = new QLabel(Widget);
-        studentDOB->setObjectName(QString::fromUtf8("studentDOB"));
-        studentDOB->setGeometry(QRect(320, 90, 251, 20));
-        studentClass = new QLabel(Widget);
-        studentClass->setObjectName(QString::fromUtf8("studentClass"));
-        studentClass->setGeometry(QRect(590, 90, 161, 20));
+        listWidget->setGeometry(QRect(30, 110, 501, 281));
         pushButton = new QPushButton(Widget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(510, 118, 61, 41));
+        pushButton->setGeometry(QRect(370, 50, 61, 41));
         pushButton_2 = new QPushButton(Widget);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(600, 118, 71, 41));
+        pushButton_2->setGeometry(QRect(460, 50, 71, 41));
+        label = new QLabel(Widget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(190, 10, 141, 41));
 
         retranslateUi(Widget);
 
@@ -60,11 +52,9 @@ public:
     void retranslateUi(QWidget *Widget)
     {
         Widget->setWindowTitle(QCoreApplication::translate("Widget", "Widget", nullptr));
-        studentName->setText(QCoreApplication::translate("Widget", "Name", nullptr));
-        studentDOB->setText(QCoreApplication::translate("Widget", "DOB", nullptr));
-        studentClass->setText(QCoreApplication::translate("Widget", "Class", nullptr));
         pushButton->setText(QCoreApplication::translate("Widget", "Add", nullptr));
         pushButton_2->setText(QCoreApplication::translate("Widget", "Remove", nullptr));
+        label->setText(QCoreApplication::translate("Widget", "QU\341\272\242N L\303\235 SINH VI\303\212N", nullptr));
     } // retranslateUi
 
 };

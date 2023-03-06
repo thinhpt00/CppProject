@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-a98a460967962bdc2cdf.json",
+					"jsonFile" : "directory-.-Debug-3928bc27902252506c8a.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "QuanLySinhVien::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-QuanLySinhVien-Debug-6eeccf9df66ccca0dec8.json",
+					"jsonFile" : "target-QuanLySinhVien-Debug-1d5ecd4c2955ad0e8961.json",
 					"name" : "QuanLySinhVien",
 					"projectIndex" : 0
 				},

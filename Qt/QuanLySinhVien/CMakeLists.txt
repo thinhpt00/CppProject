@@ -19,6 +19,9 @@ set(PROJECT_SOURCES
         widget.ui
         student.cpp
         student.h
+        studentdialog.cpp
+        studentdialog.h
+        studentdialog.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -265,6 +265,12 @@
 			null
 		],
 		[
+			"C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/studentdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_studentdialog.cpp",
+			null
+		],
+		[
 			"C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h",
 			"MU",
 			"EWIEGA46WW/moc_widget.cpp",
@@ -340,6 +346,11 @@
 		],
 		[
 			"C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/student.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/studentdialog.cpp",
 			"MU",
 			null
 		],

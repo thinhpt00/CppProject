@@ -108,6 +108,7 @@ QuanLySinhVien_autogen/timestamp: \
 	C:/Qt/6.2.4/mingw_64/include/QtGui/qvalidator.h \
 	C:/Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs.h \
 	C:/Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs_win.h \
+	C:/Qt/6.2.4/mingw_64/include/QtWidgets/QDialog \
 	C:/Qt/6.2.4/mingw_64/include/QtWidgets/QListWidgetItem \
 	C:/Qt/6.2.4/mingw_64/include/QtWidgets/QWidget \
 	C:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
@@ -115,6 +116,7 @@ QuanLySinhVien_autogen/timestamp: \
 	C:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractscrollarea.h \
 	C:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractslider.h \
 	C:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractspinbox.h \
+	C:/Qt/6.2.4/mingw_64/include/QtWidgets/qdialog.h \
 	C:/Qt/6.2.4/mingw_64/include/QtWidgets/qframe.h \
 	C:/Qt/6.2.4/mingw_64/include/QtWidgets/qlistview.h \
 	C:/Qt/6.2.4/mingw_64/include/QtWidgets/qlistwidget.h \
@@ -454,11 +456,14 @@ QuanLySinhVien_autogen/timestamp: \
 	C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/main.cpp \
 	C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/student.cpp \
 	C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/student.h \
+	C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/studentdialog.cpp \
+	C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/studentdialog.h \
 	C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.cpp \
 	C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h \
 	C:/Users/Thinh/Documents/Github/Qt/build-QuanLySinhVien-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/3.24.2/CMakeCXXCompiler.cmake \
 	C:/Users/Thinh/Documents/Github/Qt/build-QuanLySinhVien-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/3.24.2/CMakeRCCompiler.cmake \
 	C:/Users/Thinh/Documents/Github/Qt/build-QuanLySinhVien-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/3.24.2/CMakeSystem.cmake \
 	C:/Users/Thinh/Documents/Github/Qt/build-QuanLySinhVien-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/QuanLySinhVien_autogen/moc_predefs.h \
+	C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/studentdialog.ui \
 	C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.ui \
 	C:/Qt/Tools/CMake_64/bin/cmake.exe

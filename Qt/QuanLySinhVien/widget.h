@@ -11,7 +11,7 @@ namespace Ui { class Widget; }
 QT_END_NAMESPACE
 
 class QListWidgetItem;
-
+class StudentDialog;
 class Widget : public QWidget
 {
     Q_OBJECT
@@ -37,5 +37,7 @@ private:
     Ui::Widget *ui;
 
     QVector<Student*> m_Students;
+
+    StudentDialog* m_StudentDialog;
 };
 #endif // WIDGET_H
