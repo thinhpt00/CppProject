@@ -3,6 +3,9 @@ C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h
  mmc:Q_OBJECT
  mdp:C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h
  mdp:C:/Users/Thinh/Documents/Github/Qt/build-QuanLySinhVien-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/QuanLySinhVien_autogen/moc_predefs.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/QString
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/QVector
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qabstractitemmodel.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qalgorithms.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qanystringview.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qarraydata.h
@@ -23,18 +26,24 @@ C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qcontainerfwd.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qcontainerinfo.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qcontainertools_impl.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qcontiguouscache.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qdatastream.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qdebug.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qflags.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qgenericatomic.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qglobal.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qglobalstatic.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qhash.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qhashfunctions.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qiodevicebase.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qitemselectionmodel.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qiterable.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qiterator.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qline.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qlist.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qlocale.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qlogging.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qmap.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qmargins.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qmath.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qmetacontainer.h
@@ -50,14 +59,18 @@ C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qprocessordetection.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qrect.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qrefcount.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qregularexpression.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qscopedpointer.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qscopeguard.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qset.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qshareddata.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qshareddata_impl.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qsharedpointer.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qsharedpointer_impl.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qsize.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qstring.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qstringalgorithms.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qstringconverter.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qstringlist.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qstringliteral.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qstringmatcher.h
@@ -67,10 +80,13 @@ C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qsystemdetection.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qtaggedpointer.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qtcore-config.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qtextstream.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qtmetamacros.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qtypeinfo.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qutf8stringview.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qvariant.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qvarlengtharray.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qvector.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtCore/qversiontagging.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qbitmap.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qbrush.h
@@ -79,6 +95,7 @@ C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qfont.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qfontinfo.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qfontmetrics.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qicon.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qimage.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qkeysequence.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qpaintdevice.h
@@ -92,10 +109,26 @@ C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qtgui-config.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qtguiglobal.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qtransform.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qvalidator.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs_win.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/QListWidgetItem
  mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/QWidget
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractitemdelegate.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractitemview.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractscrollarea.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractslider.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractspinbox.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qframe.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qlistview.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qlistwidget.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qrubberband.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qsizepolicy.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qslider.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qstyle.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qstyleoption.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qtabbar.h
+ mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qtabwidget.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qtwidgets-config.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qtwidgetsglobal.h
  mdp:C:/Qt/6.2.4/mingw_64/include/QtWidgets/qwidget.h
@@ -312,6 +345,7 @@ C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.h
  mdp:C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h
  mdp:C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h
  mdp:C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h
+ mdp:C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/student.h
 C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/main.cpp
 C:/Users/Thinh/Documents/Github/Qt/QuanLySinhVien/widget.cpp
  uic:./ui_widget.h
