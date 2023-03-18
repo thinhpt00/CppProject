@@ -1,11 +1,24 @@
 ﻿#include<iostream>
-#include<iomanip>
-#include<chrono>
+#include<iomanip> // Thư viện dùng để set độ chính xác cho số chấm động
+#include<chrono> // Thư viện để dùng hàm đếm tgian chương trình chạy
+#include<random> // Thư viện dùng để sử dụng hàm phát sinh số ngẫu nhiên
+#include<cstdlib> // Sử dụng hàm srand() và rand()
+#include<ctime> // Sử dụng time() , thời gian thực của chương trình
+
 using namespace std;
-auto start = chrono::steady_clock::now(); // Đếm thời gian chương trình chạy
+
+//auto start = chrono::steady_clock::now(); // Đếm thời gian chương trình chạy
+void random() {
+	srand(time(NULL));
+	int n = rand() % 100 + 1;
+	cout << "\n" << n;
+}
 void nhap(int a[], int n) {
-	for (int i = 0; i < n; i++) {
-		a[i] = rand() % 10;
+	random_device rd;
+	mt19937 rng(rd());
+	uniform_int_distribution<int> uni(1, 1000); // random số từ 1 -> 1000
+	for (int i = 0; i < n; ++i) {
+		a[i] = uni(rng);
 	}
 }
 void xuat(int a[], int n) {
@@ -47,7 +60,29 @@ void xoa(int a[], int &n) {
 }
 int main() {
 
+
 #if 1
+	int a[100];
+	nhap(a, 10);
+	xuat(a, 10);
+	random();
+#endif
+// Hàm phát sinh số ngẫu nhiên (random number)
+#if 0
+	random_device rd;
+	mt19937 rng(rd());
+	auto a = rng();
+	cout << a;
+	uniform_int_distribution<int> uni(1,1000); // random số từ 1 -> 1000
+	for (int i = 0; i < 10; ++i) {
+		int x = uni(rng);
+		cout << x << "\n";
+	}
+
+
+#endif
+// Đếm tgian chương trình chạy ms
+#if 0
 
 	for (int i = 0; i < 1000; i++) {
 		cout << i << "\t";
@@ -58,6 +93,7 @@ int main() {
 	cout << "\n" << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
 #endif
+// Kích cỡ con trỏ (8 byte (64-bit) or 4 byte (32-bit) )
 #if 0
 
 	char i{ 97 };
@@ -66,7 +102,7 @@ int main() {
 	cout << sizeof(p);
 
 #endif
-
+// Độ chính xác của số chấm động
 #if 0
 	float i = 2.66666666666666666666;// độ chính xác của float là từ 6->9 và thường là 7 số
 	double i1 = 2.66666666666666666666;// độ chính xác của float là từ 15->18 và thường là 16 số
@@ -75,7 +111,7 @@ int main() {
 	cout << i << endl;
 	cout << i1;
 #endif
-
+// Sử dụng hàm
 #if 0
 	int a[100] , n = 10;
 	nhap(a, n);
@@ -84,7 +120,7 @@ int main() {
 	cout << endl;
 	xuat(a, n);
 #endif
-
+// Con trỏ
 #if 0
 	char a[8] = { 1,2,3,4,5,6,7,8 };
 	char* p = a;
