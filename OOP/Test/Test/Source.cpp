@@ -9,8 +9,8 @@ using namespace std;
 
 //auto start = chrono::steady_clock::now(); // Đếm thời gian chương trình chạy
 void random() {
-	srand(time(NULL));
-	int n = rand() % 100 + 1;
+	srand(time(NULL)); // Hàm sinh số ngẫu nhiên dựa vào thời gian thực của chương trình 
+	int n = rand() % 100 + 1; // rand() là hàm in ra các số ngẫu nhiên được tạo ra từ hàm srand()
 	cout << "\n" << n;
 }
 void nhap(int a[], int n) {
@@ -60,12 +60,35 @@ void xoa(int a[], int &n) {
 }
 int main() {
 
-
+// Constant && Pointer
 #if 1
-	int a[100];
-	nhap(a, 10);
-	xuat(a, 10);
-	random();
+	// Con trỏ HẰNG*********************************
+	int a(10);
+	const int* p = &a;
+	cout << *p;
+	a = 20; // Biến a có thể thay đổi giá trị vì nó k phải biến hằng
+	//*p = 20; // ERROR: Con trỏ HẰNG không thể thay đổi giá trị biến mà nó trỏ tới
+	int b(20);
+	p = &b; // OK: Con trỏ HẰNG có thể trỏ tới địa chỉ của một biến khác
+	cout << *p;
+
+	// HẰNG con trỏ***********************************
+	int a1{ 100 };
+	int* const p1 = &a1;
+	cout << *p1;
+	a1 = 200;
+	*p1 = 200; // OK: HẰNG con trỏ có thể thay đổi giá trị biến mà nó trỏ tới
+	cout << *p1;
+	int b1{ 200 };
+	//p1 = &b1; // ERROR: HẰNG con trỏ không thể trỏ tới địa chỉ của một biến khác
+
+	// HẰNG con trỏ HẰNG*******************************
+	int a2{ 3000 };
+	const int* const p2 = &a2;
+	//*p2 = 3; // ERROR: HẰNG con trỏ HẰNG không thể thay đổi giá trị biến mà nó trỏ tới
+	int b2{ 546 };
+	//p2 = &b2; //ERROR: HẰNG con trỏ HẰNG không thể trỏ tới địa chỉ của một biến khác
+
 #endif
 // Hàm phát sinh số ngẫu nhiên (random number)
 #if 0
