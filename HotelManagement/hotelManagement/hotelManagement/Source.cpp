@@ -1,4 +1,5 @@
 #include <iostream>
+#include<iomanip>
 using namespace std;
 
 int main()
@@ -7,24 +8,61 @@ int main()
     int sRoom = 0, sChicken = 0, sHotDog = 0, sFish = 0, sPizza = 0;
     int Total = 0;
 
-    cout << "\n\tEnter items\n";
-    cout << "\nEnter Room: "; cin >> qRoom;
-    cout << "\nEnter Chicken: "; cin >> qChicken;
-    cout << "\nEnter Hotdog: "; cin >> qHotDog;
-    cout << "\nEnter Fish: "; cin >> qFish;
-    cout << "\nEnter Pizza: "; cin >> qPizza;
+    //cout << "\n\tEnter items\n";
+    //cout << "\nEnter Room: "; cin >> qRoom;
+    //cout << "\nEnter Chicken: "; cin >> qChicken;
+    //cout << "\nEnter Hotdog: "; cin >> qHotDog;
+    //cout << "\nEnter Fish: "; cin >> qFish;
+    //cout << "\nEnter Pizza: "; cin >> qPizza;
+
 label:
-    cout << "\n\t\tMenu\n";
-    cout << "\n(1) Room";
-    cout << "\n(2) Chicken";
+    char x = 33;
+    //cout << "\n\t_________________________________________\n";
+    cout << "\n\t+";
+    for (int i = 0; i < 48; ++i) {
+        cout << "-";
+    }
+    //cout << setfill('*');
+    cout  << "+\n\t" << setw(49) << left << "|                      Menu" << "|";
+    //cout << "\n\t|_______________________________________|\n";
+    //***
+    cout << "\n\t|";
+    for (int i = 0; i < 48; ++i) {
+        cout << "-" ;
+    }
+    cout << "|";
+    //cout << setfill('_');
+    //***
+    cout << "\n\t|" << setw(48) << left << "                   (1) Room" << "|";
+
+    cout << "\n\t|";
+    for (int i = 0; i < 48; ++i) {
+        cout << "-";
+    }
+    cout << "|";
+
+    cout << "\n\t|" << setw(12) << left << "(2) Chicken" << setw(12) << left << "|(3) Hotdog"
+                    << setw(12) << left << "| (4) Fish" << setw(12) << left << "| (5) Pizza" << "|";
+
+    cout << "\n\t" <<  setfill('-') << setw(13) << left << "|" << setw(12) << left << x
+                    << setw(12) << left << "|" << setw(12) << left << x << "|";
+
+    cout << "\n\t|" << setfill(' ') << setw(24) << left << "       (6) Detail" << setw(24) << left << "|       (7) Exit" << "|";
+
+    cout << "\n\t" << setfill('-') << setw(25) << left << "+" << setw(24) << left << x << "+";
+
+    cout << setfill(' ');
+    
+    //cout << "\n(1) Room";
+  /*  cout << "\n(2) Chicken";
     cout << "\n(3) Hotdog";
     cout << "\n(4) Fish";
     cout << "\n(5) Pizza";
     cout << "\n(6) Detail";
-    cout << "\n(7) Exit";
+    cout << "\n(7) Exit";*/
 
     int choice;
-    cout << "\n\tPlease select your choice!\n"; cin >> choice;
+    cout << "\n\n\tPlease select your choice!\n"; cin >> choice;
     switch (choice) {
     case 1:
         int room;
