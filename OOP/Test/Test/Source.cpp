@@ -58,10 +58,27 @@ void xoa(int a[], int &n) {
 		xuat(a, n);
 	}
 }
+void addressCall(int* p) {
+	*p = 200;
+}
 int main() {
 
-// Constant && Pointer
 #if 1
+	int a{ 10 };
+	int* p = &a;
+	cout << *p;
+	addressCall(p);
+	
+	if (!p) {
+		cout << "\np is null pointer\n";
+	}
+	else
+	{
+		cout << "\n" << *p;
+	}
+#endif
+// Constant && Pointer
+#if 0
 	// Con trỏ HẰNG*********************************
 	int a(10);
 	const int* p = &a;
