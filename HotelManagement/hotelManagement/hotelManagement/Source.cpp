@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include<iomanip>
 using namespace std;
 
@@ -16,23 +16,21 @@ int main()
     //cout << "\nEnter Pizza: "; cin >> qPizza;
 
 label:
-    char x = 33;
-    //cout << "\n\t_________________________________________\n";
+    char x = 33; // dấu +
+    
     cout << "\n\t+";
     for (int i = 0; i < 48; ++i) {
         cout << "-";
     }
-    //cout << setfill('*');
+    
     cout  << "+\n\t" << setw(49) << left << "|                      Menu" << "|";
-    //cout << "\n\t|_______________________________________|\n";
-    //***
+    
     cout << "\n\t|";
     for (int i = 0; i < 48; ++i) {
         cout << "-" ;
     }
     cout << "|";
-    //cout << setfill('_');
-    //***
+    
     cout << "\n\t|" << setw(48) << left << "                   (1) Room" << "|";
 
     cout << "\n\t|";
@@ -52,14 +50,6 @@ label:
     cout << "\n\t" << setfill('-') << setw(25) << left << "+" << setw(24) << left << x << "+";
 
     cout << setfill(' ');
-    
-    //cout << "\n(1) Room";
-  /*  cout << "\n(2) Chicken";
-    cout << "\n(3) Hotdog";
-    cout << "\n(4) Fish";
-    cout << "\n(5) Pizza";
-    cout << "\n(6) Detail";
-    cout << "\n(7) Exit";*/
 
     int choice;
     cout << "\n\n\tPlease select your choice!\n"; cin >> choice;
