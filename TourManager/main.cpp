@@ -1,9 +1,12 @@
 
 
-#include<iostream>
-#include<fstream>
+#include <iostream>
+#include <fstream>
 #include <sstream>
-#include<map>
+#include <map>
+#include <vector>
+#include "C:\Users\Thinh\Documents\Github\TourManager\hppFile\hotel.hpp"
+#include "C:\Users\Thinh\Documents\Github\TourManager\hppFile\transport.hpp"
 
 using namespace std;
 const string adminAccountName = "admin";
@@ -16,12 +19,56 @@ void mainMenu(){
     cout << "\n\t0: Exit";
 }
 int main(){
+    // Transport
+    vector<Transport> transportList;
+    map<int,Transport> transportMap;
+    ifstream transportFile("transport.txt");
+    string str_transport;
+    while (getline(transportFile, str_transport)){
+        stringstream ss(str_transport);
+        string s_1,s_2,s_3,s_4,s_5,s_6;
+        ss >> s_1 >> s_2 >> s_3 >> s_4 >> s_5 >> s_6;
+        Transport transport_;
+        transport_.setTransportBrand(s_1);
+        transport_.setTransportName(s_2);
+        transport_.setDeparturePlace(s_3);
+        transport_.setDestination(s_4);
+        transport_.setDepartureDay(s_5);
+        transport_.setTicketPrice(stof(s_6));
+
+        transportList.push_back(transport_);
+    }
+    for(auto x2 : transportList){
+        x2.printTransport();
+    }
+    // Hotel
+    vector<Hotel> hotelList;
+    map<int,Hotel> hotelMap;
+    ifstream hotelFile("hotel.txt");
+    string s;
+    while (getline(hotelFile, s)){
+        stringstream ss(s);
+        string s1,s2,s3,s4,s5;
+        ss >> s1 >> s2 >> s3 >> s4 >> s5;
+        Hotel x;
+        x.setHotelName(s1);
+        x.setHotelAddress(s2);
+        x.setRoomType(s3);
+        x.setStartDay(s4);
+        x.setRoomPrice(stof(s5));
+        hotelList.push_back(x);
+    }
+    // for(auto x1 : hotelList){
+    //     x1.printHotel();
+    // }
+
+    // Password, username
     map<string,string> saveDataToText;
-    std::ifstream inputFile("signUpData.txt");
-    std::string line;
-    while (std::getline(inputFile, line)) {
+    ifstream inputFile("signUpData.txt");
+    string line;
+    while (getline(inputFile, line)) {
         // Tách dữ liệu trên mỗi dòng thành các phần tử riêng biệt
-        std::istringstream iss(line);
+        istringstream iss(line);
         string user;
         string pass;
         if (iss >> user >> pass) {
@@ -29,9 +76,9 @@ int main(){
             saveDataToText[user] = pass;
         }
     }
-    for(auto x : saveDataToText){
-        cout << x.first << " - " << x.second << endl;  
-    }
+    // for(auto x : saveDataToText){
+    //     cout << x.first << " - " << x.second << endl;  
+    // }
     ///////////
     int n = -1;
     do{
@@ -44,7 +91,6 @@ int main(){
             cin.clear();
             cin.ignore();
         }
-
         if(n == 1){
             string loginName, loginPassword;
             cout << "\nEnter username: ";
@@ -74,15 +120,55 @@ int main(){
                     cout << "\nLogin failed!";
                 }
                 else{
-                    cout << "\nHello, User!\nWhat do you want?";
-                    cout << "\n1: addTransport";
-                    cout << "\n2: addHotel";
-                    cout << "\n3: editPersonalInformation";
-                    cout << "\n4: viewTripInformation";
-                    cout << "\n5: editTripInformation";
-                    cout << "\n6: cancelTripHandles";
+                    int n2; 
+                    do{
+                        cout << "\nHello, User!\nWhat do you want?";
+                        cout << "\n1: Add Trip";
+                        cout << "\n2: Edit Personal Information";
+                        cout << "\n3: View Trip Information";
+                        cout << "\n4: Edit Trip Information";
+                        cout << "\n5: Cancel Trip Handles";
+                        cout << "\n0: Done";
+                        cout << "\n\nEnter number in range 0 - 5: ";
+                        cin >> n2;
+                        if(n2 == 0){break;}
+                        else if(n2 == 1){
+                            //Hotel
+                            string address,date;
+                            cout << "\nEnter hotel address: ";
+                            cin.ignore();
+                            getline(cin,address);
+                            cout << "\nEnter from date (dd-mm-yy): ";
+                            cin >> date;
+                            for(auto h : hotelList){
+                                if(h.getHotelAddress() == address){
+                                    int i = 1;
+                                    h.printHotel();
+                                    hotelMap[i] = h;
+                                    i++;    
+                                }
+                            }
+                            for(auto m : hotelMap){
 
-                    cout << "\n\nEnter number in range 1 - 8: ";
+                            }
+                            // Transport
+                            string from,to,day;
+                            cout << "\nEnter from: ";
+                            cin.ignore();
+                            getline(cin,from);
+                            cout << "\nEnter from date (dd-mm-yy): ";
+                            cin >> day;
+                            cout << "\nEnter to: ";
+                            cin.ignore();
+                            getline(cin,to);
+                            for(auto t : transportList){
+                                if(t.getDeparturePlace() == from && t.getDestination() == to){
+                                    t.printTransport();
+                                }
+                            }
+                        }
+                    }
+                    while(n2 < 0 || n2 > 5);
                 }
             }
             // cout << "\n1: User Account";
@@ -115,15 +201,14 @@ int main(){
         // }
     }while (n!=0);
 
-// Back-up data to text file
+// Back-up data username, password to text file
     std::ofstream outFile("signUpData.txt");
-    if (outFile.is_open())
-    {
+    if (outFile.is_open()){
         for(auto x : saveDataToText){
-        //string s = x.first + " - " + x.second;
-        outFile << x.first << " " << x.second << endl;
-        cout << x.first << " - " << x.second << endl;  
-    }
+            //string s = x.first + " - " + x.second;
+            outFile << x.first << " " << x.second << endl;
+            //cout << x.first << " - " << x.second << endl;  
+        }
         outFile.close();
     }
 /////////////

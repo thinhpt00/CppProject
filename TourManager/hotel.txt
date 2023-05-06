@@ -1,0 +1,6 @@
+HaAnh HaNoi SeaView 12-5-2023 100
+MinhCuong NgheAn MountainView 12-5-2023 100
+HaAnh HaNoi MountainView 12-5-2023 200
+HaAnh HaNoi CityView 12-5-2023 150
+HaAnh HaNoi PrivateView 12-5-2023 300
+HaAnh ThanhHoa SeaView 12-5-2023 120

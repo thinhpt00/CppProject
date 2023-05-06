@@ -1,0 +1,10 @@
+VietnamAirlines MH-370 HaNoi TpHCM 23-05-2023 2000
+VietJetAir MH-123 HaNoi TpHCM 23-05-2023 1800
+BambooAirways MK-333 HaNoi TpHCM 23-05-2023 1900
+JetstarPacificAirlines MD-885 HaNoi TpHCM 23-05-2023 1500
+PacificAirlines MH-120 HaNoi TpHCM 23-05-2023 1200
+VietnamAirlines MH-370 HaNoi PhuQuoc 23-05-2023 2000
+VietJetAir MH-123 ThanhHoa TpHCM 23-05-2023 1800
+BambooAirways MK-333 NgheAn TpHCM 23-05-2023 1900
+JetstarPacificAirlines MD-885 HaNoi KonTum 23-05-2023 1500
+PacificAirlines MH-120 HaNoi CaMau 23-05-2023 1200
