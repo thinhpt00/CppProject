@@ -5,8 +5,8 @@
 #include <sstream>
 #include <map>
 #include <vector>
-#include "C:\Users\Thinh\Documents\Github\TourManager\hppFile\hotel.hpp"
-#include "C:\Users\Thinh\Documents\Github\TourManager\hppFile\transport.hpp"
+#include "C:\Users\Thinh\Documents\Github\TourManager\hppFile\trip.hpp"
+//#include "C:\Users\Thinh\Documents\Github\TourManager\hppFile\transport.hpp"
 
 using namespace std;
 const string adminAccountName = "admin";
@@ -19,6 +19,10 @@ void mainMenu(){
     cout << "\n\t0: Exit";
 }
 int main(){
+    // Trip
+    vector<Trip> tripList;
+    map<int,Trip> tripMap;
+
     // Transport
     vector<Transport> transportList;
     map<int,Transport> transportMap;
@@ -38,9 +42,9 @@ int main(){
 
         transportList.push_back(transport_);
     }
-    for(auto x2 : transportList){
-        x2.printTransport();
-    }
+    // for(auto x2 : transportList){
+    //     x2.printTransport();
+    // }
     // Hotel
     vector<Hotel> hotelList;
     map<int,Hotel> hotelMap;
@@ -133,6 +137,35 @@ int main(){
                         cin >> n2;
                         if(n2 == 0){break;}
                         else if(n2 == 1){
+                            //Trip
+                            Trip trip;
+                            string str1,str2,str3,str4;
+                            int numPeople;
+                            cout <<"\n\tEnter Trip Information!";
+                            cout << "\nEnter from: ";
+                            cin.ignore();
+                            getline(cin,str1);
+                            cout << "\n\t" << str1;
+                            cout << "\nEnter to: ";
+                            //cin.ignore();
+                            getline(cin,str2);
+                            cout << "\n\t" << str2;
+                            cout << "\nEnter from Date: ";
+                            //cin.ignore();
+                            getline(cin,str3);
+                            cout << "\n\t" << str3;
+                            cout << "\nEnter to Date: ";
+                            cin.ignore();
+                            getline(cin,str4);
+                            cout << "\n\t" << str4;
+                            cout << "\nEnter number of peple: ";
+                            cin >> numPeople;
+                            trip.setStartLocation(str1);
+                            trip.setEndLocation(str2);
+                            trip.setFromDate(str3);
+                            trip.setToDate(str4);
+                            trip.setNumberOfPeople(numPeople);
+
                             //Hotel
                             string address,date;
                             cout << "\nEnter hotel address: ";
@@ -140,16 +173,24 @@ int main(){
                             getline(cin,address);
                             cout << "\nEnter from date (dd-mm-yy): ";
                             cin >> date;
+                            int i = 0;
                             for(auto h : hotelList){
                                 if(h.getHotelAddress() == address){
-                                    int i = 1;
-                                    h.printHotel();
+                                    i++; 
+                                    cout << "\n\t" << i << " - "; h.printHotel();
                                     hotelMap[i] = h;
-                                    i++;    
+                                       
                                 }
                             }
+                            cout << "\nEnter number in range 1 - " << i << " : ";
+                            int check; cin >> check;
+                            float hotel_cost;
                             for(auto m : hotelMap){
-
+                                if(m.first == check){
+                                    trip.setPlace(m.second);
+                                    hotel_cost = m.second.getRoomPrice();
+                                    break;
+                                }
                             }
                             // Transport
                             string from,to,day;
@@ -161,14 +202,50 @@ int main(){
                             cout << "\nEnter to: ";
                             cin.ignore();
                             getline(cin,to);
+                            int j = 0;
                             for(auto t : transportList){
                                 if(t.getDeparturePlace() == from && t.getDestination() == to){
-                                    t.printTransport();
+                                    j++;
+                                    cout << "\n\t" << j << " - "; t.printTransport();                                   
+                                    transportMap[j] = t;                                    
                                 }
                             }
+                            cout << "\nEnter number in range 1 - " << j << " : ";
+                            int check1; cin >> check1;
+                            float transport_cost;
+                            for(auto m : transportMap){
+                                if(m.first == check1){
+                                    trip.setTransportType(m.second);
+                                    transport_cost = m.second.getTicketPrice();
+                                    break;
+                                }
+                            }
+                            float trip_cost;
+                            trip_cost = (hotel_cost + transport_cost) * numPeople;
+                            trip.setTripCost(trip_cost);
+
+                            tripList.push_back(trip);
+                            //
+
                         }
+                        else if(n2 == 2){
+
+                        }
+                        else if(n2 == 3){
+                            for(auto trip : tripList){
+                                trip.printTrip();
+                            }
+
+                        }
+                        else if(n2 == 4){
+
+                        }
+                        else if(n2 == 5){
+
+                        }
+
                     }
-                    while(n2 < 0 || n2 > 5);
+                    while(n2!=0);
                 }
             }
             // cout << "\n1: User Account";

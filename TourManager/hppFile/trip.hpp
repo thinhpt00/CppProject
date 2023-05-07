@@ -31,7 +31,14 @@ public:
     int getNumberOfPeople(){return numberOfPeople;}
     float getTripCost(){return tripCost;}
 
-    
+    void printTrip(){
+        cout << "\nTrip Information: ";
+        cout << "\n" << startLocation << " to " << endLocation << " from " << fromDate << " to " << toDate << endl;
+        transportType.printTransport();
+        place.printHotel();
+        cout << "Number of people: " << numberOfPeople;
+        cout <<"\n\t-> Trip cost: " << tripCost;
+    }
 };
 
 #endif
