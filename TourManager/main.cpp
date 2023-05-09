@@ -19,82 +19,26 @@ vector<User> readUserInformationFromTextFile(const string& fileName);
 void saveUserInformationToTextFile(const string &filename, const vector<User> &user);
 vector<Transport> readTransportInformationFromTextFile(const string& fileName);
 vector<Hotel> readHotelInformationFromTextFile(const string& fileName);
+void AddTrip(Trip& trip);
+float AddHotel(vector<Hotel>& hotelList, map<int, Hotel>& hotelMap, Trip& trip, vector<Hotel>& hotelVectorInTrip);
+float AddTransport(vector<Transport>& transportList, map<int,Transport>& transportMap, Trip& trip, vector<Transport>& transportVectorInTrip);
 
 int main(){
     //user
     vector<User> userList;
     userList = readUserInformationFromTextFile("userData.txt");
-    // for(auto& u : userList){
-    //     u.printUser();
-    // }
-
     // Trip
     vector<Trip> tripList;
     map<int,Trip> tripMap;
-
+    map<string,vector<Trip>> booKing;
     // Transport
     vector<Transport> transportList;
     map<int,Transport> transportMap;
     transportList = readTransportInformationFromTextFile("transport.txt");
-    // for(auto& x2 : transportList){
-    //     x2.printTransport();
-    // }
-    // ifstream transportFile("transport.txt");
-    // string str_transport;
-    // while (getline(transportFile, str_transport)){
-    //     stringstream ss(str_transport);
-    //     string s_1,s_2,s_3,s_4,s_5,s_6;
-    //     ss >> s_1 >> s_2 >> s_3 >> s_4 >> s_5 >> s_6;
-    //     Transport transport_;
-    //     transport_.setTransportBrand(s_1);
-    //     transport_.setTransportName(s_2);
-    //     transport_.setDeparturePlace(s_3);
-    //     transport_.setDestination(s_4);
-    //     transport_.setDepartureDay(s_5);
-    //     transport_.setTicketPrice(stof(s_6));
-    //     transportList.push_back(transport_);
-    // }
-
     // Hotel
     vector<Hotel> hotelList;
     map<int,Hotel> hotelMap;
     hotelList = readHotelInformationFromTextFile("hotel.txt");
-    // ifstream hotelFile("hotel.txt");
-    // string s;
-    // while (getline(hotelFile, s)){
-    //     stringstream ss(s);
-    //     string s1,s2,s3,s4,s5;
-    //     ss >> s1 >> s2 >> s3 >> s4 >> s5;
-    //     Hotel x;
-    //     x.setHotelName(s1);
-    //     x.setHotelAddress(s2);
-    //     x.setRoomType(s3);
-    //     x.setStartDay(s4);
-    //     x.setRoomPrice(stof(s5));
-    //     hotelList.push_back(x);
-    // }
-    // for(auto& x1 : hotelList){
-    //     x1.printHotel();
-    // }
-
-    // Password, username
-    // map<string,string> saveDataToText;
-    // ifstream inputFile("userData.txt");
-    // string line;
-    // while (getline(inputFile, line)) {
-    //     // Tách dữ liệu trên mỗi dòng thành các phần tử riêng biệt
-    //     istringstream iss(line);
-    //     string user;
-    //     string pass;
-    //     if (iss >> user >> pass) {
-    //         // Lưu các phần tử vào map
-    //         saveDataToText[user] = pass;
-    //     }
-    // }
-    // for(auto& x : saveDataToText){
-    //     cout << x.first << " - " << x.second << endl;  
-    // }
-    ///////////
 
     int n = -1;
     do{
@@ -194,10 +138,13 @@ int main(){
                     cout << "\nLogin failed!";
                 }
                 else{
+                    vector<Trip> tour;
+                    vector<Hotel> HOTEL;
+                    vector<Transport> TRANSPORT;
                     int n2; 
                     do{
                         cout << "\nHello, User!\nWhat do you want?";
-                        cout << "\n\t1: Add Trip";
+                        cout << "\n\t1: Add Tour Information";
                         cout << "\n\t2: Edit Personal Information";
                         cout << "\n\t3: View Trip Information";
                         cout << "\n\t4: Edit Trip Information";
@@ -209,90 +156,111 @@ int main(){
                         else if(n2 == 1){
                             //Trip
                             Trip trip;
-                            string str1,str2,str3,str4;
-                            int numPeople;
-                            cout <<"\n\tEnter Trip Information!";
-                            cout << "\nEnter from: ";
-                            cin.ignore();
-                            getline(cin,str1);
-                            //cout << "\n\t" << str1;
-                            cout << "\nEnter to: ";
-                            //cin.ignore();
-                            getline(cin,str2);
-                            //cout << "\n\t" << str2;
-                            cout << "\nEnter from Date: ";
-                            //cin.ignore();
-                            getline(cin,str3);
-                            //cout << "\n\t" << str3;
-                            cout << "\nEnter to Date: ";
-                            //cin.ignore();
-                            getline(cin,str4);
-                            //cout << "\n\t" << str4;
-                            cout << "\nEnter number of peple: ";
-                            cin >> numPeople;
-                            trip.setStartLocation(str1);
-                            trip.setEndLocation(str2);
-                            trip.setFromDate(str3);
-                            trip.setToDate(str4);
-                            trip.setNumberOfPeople(numPeople);
+                            // string str1,str2,str3,str4;
+                            // int numPeople;
+                            // cout <<"\n\tEnter Trip Information!";
+                            // cout << "\nEnter from: ";
+                            // cin.ignore();
+                            // getline(cin,str1);
+                            // //cout << "\n\t" << str1;
+                            // cout << "\nEnter to: ";
+                            // //cin.ignore();
+                            // getline(cin,str2);
+                            // //cout << "\n\t" << str2;
+                            // cout << "\nEnter from Date: ";
+                            // //cin.ignore();
+                            // getline(cin,str3);
+                            // //cout << "\n\t" << str3;
+                            // cout << "\nEnter to Date: ";
+                            // //cin.ignore();
+                            // getline(cin,str4);
+                            // //cout << "\n\t" << str4;
+                            // cout << "\nEnter number of peple: ";
+                            // cin >> numPeople;
+                            // trip.setStartLocation(str1);
+                            // trip.setEndLocation(str2);
+                            // trip.setFromDate(str3);
+                            // trip.setToDate(str4);
+                            // trip.setNumberOfPeople(numPeople);
 
                             //Hotel
-                            string address,date;
-                            cout << "\nEnter hotel address: ";
-                            cin.ignore();
-                            getline(cin,address);
-                            cout << "\nEnter from date (dd-mm-yy): ";
-                            cin >> date;
-                            int i = 0;
-                            for(auto& h : hotelList){
-                                if(h.getHotelAddress() == address){
-                                    i++; 
-                                    cout << "\n\t" << i << " - "; h.printHotel();
-                                    hotelMap[i] = h;
-                                       
-                                }
-                            }
-                            cout << "\nEnter number in range 1 - " << i << " : ";
-                            int check; cin >> check;
-                            float hotel_cost;
-                            for(auto& m : hotelMap){
-                                if(m.first == check){
-                                    trip.setPlace(m.second);
-                                    hotel_cost = m.second.getRoomPrice();
-                                    break;
-                                }
-                            }
+                            // string address,date;
+                            // cout << "\nEnter hotel address: ";
+                            // cin.ignore();
+                            // getline(cin,address);
+                            // cout << "\nEnter from date (dd-mm-yy): ";
+                            // cin >> date;
+                            // int i = 0;
+                            // for(auto& h : hotelList){
+                            //     if(h.getHotelAddress() == address){
+                            //         i++; 
+                            //         cout << "\n\t" << i << " - "; h.printHotel();
+                            //         hotelMap[i] = h;                                      
+                            //     }
+                            // }
+                            // cout << "\nEnter number in range 1 - " << i << " : ";
+                            // int check; cin >> check;
+                            // float hotel_cost;
+                            // for(auto& m : hotelMap){
+                            //     if(m.first == check){
+                            //         trip.setPlace(m.second);
+                            //         hotel_cost = m.second.getRoomPrice();
+                            //         break;
+                            //     }
+                            // }
+
                             // Transport
-                            string from,to,day;
-                            cout << "\nEnter from: ";
-                            cin.ignore();
-                            getline(cin,from);
-                            cout << "\nEnter from date (dd-mm-yy): ";
-                            cin >> day;
-                            cout << "\nEnter to: ";
-                            cin.ignore();
-                            getline(cin,to);
-                            int j = 0;
-                            for(auto& t : transportList){
-                                if(t.getDeparturePlace() == from && t.getDestination() == to){
-                                    j++;
-                                    cout << "\n\t" << j << " - "; t.printTransport();                                   
-                                    transportMap[j] = t;                                    
-                                }
-                            }
-                            cout << "\nEnter number in range 1 - " << j << " : ";
-                            int check1; cin >> check1;
-                            float transport_cost;
-                            for(auto& m : transportMap){
-                                if(m.first == check1){
-                                    trip.setTransportType(m.second);
-                                    transport_cost = m.second.getTicketPrice();
-                                    break;
-                                }
-                            }
+                            // string from,to,day;
+                            // cout << "\nEnter from: ";
+                            // cin.ignore();
+                            // getline(cin,from);
+                            // cout << "\nEnter from date (dd-mm-yy): ";
+                            // cin >> day;
+                            // cout << "\nEnter to: ";
+                            // cin.ignore();
+                            // getline(cin,to);
+                            // int j = 0;
+                            // for(auto& t : transportList){
+                            //     if(t.getDeparturePlace() == from && t.getDestination() == to){
+                            //         j++;
+                            //         cout << "\n\t" << j << " - "; t.printTransport();                                   
+                            //         transportMap[j] = t;                                    
+                            //     }
+                            // }
+                            // cout << "\nEnter number in range 1 - " << j << " : ";
+                            // int check1; cin >> check1;
+                            // float transport_cost;
+                            // for(auto& m : transportMap){
+                            //     if(m.first == check1){
+                            //         trip.setTransportType(m.second);
+                            //         transport_cost = m.second.getTicketPrice();
+                            //         break;
+                            //     }
+                            // }
+                            // float trip_cost;
+                            // trip_cost = (hotel_cost + transport_cost) * numPeople;
+                            // trip.setTripCost(trip_cost);
+                            //
                             float trip_cost;
-                            trip_cost = (hotel_cost + transport_cost) * numPeople;
-                            trip.setTripCost(trip_cost);
+                            float hotel_cost = 0;
+                            float transport_cost = 0;
+                            AddTrip(trip);
+                            int n5;
+                            do{
+                                cout << "\n\t1: Add Hotel";
+                                cout << "\n\t2: Add Transport";
+                                cout << "\n\t0: Done";
+                                cin >> n5;
+                                if(n5 == 1){
+                                    hotel_cost += AddHotel(hotelList,hotelMap,trip,HOTEL);
+                                }
+                                else if( n5 == 2){
+                                    transport_cost += AddTransport(transportList,transportMap,trip,TRANSPORT);
+                                }
+                            }while(n5 != 0);
+                            trip_cost = (hotel_cost + transport_cost) * trip.getNumberOfPeople();
+                            trip.setTripCost(trip_cost);                            
+                            tour.push_back(trip);
                             tripList.push_back(trip);
                             //
                         }
@@ -348,7 +316,7 @@ int main(){
                             }while(n3 != 0);
                         }
                         else if(n2 == 3){
-                            for(auto& trip : tripList){
+                            for(auto& trip : tour){
                                 trip.printTrip();
                             }
                         }
@@ -372,6 +340,7 @@ int main(){
                         }
                     }
                     while(n2!=0);
+                    booKing[loginName] = tour;
                 }
             }
         }
@@ -543,4 +512,91 @@ vector<Hotel> readHotelInformationFromTextFile(const string& fileName){
         file.close();
     }
     return x;
+}
+void AddTrip(Trip& trip){
+    string str1,str2,str3,str4;
+    int numPeople;
+    cout <<"\n\tEnter Trip Information!";
+    cout << "\nEnter from: ";
+    cin.ignore();
+    getline(cin,str1);
+    //cout << "\n\t" << str1;
+    cout << "\nEnter to: ";
+    //cin.ignore();
+    getline(cin,str2);
+    //cout << "\n\t" << str2;
+    cout << "\nEnter from Date: ";
+    //cin.ignore();
+    getline(cin,str3);
+    //cout << "\n\t" << str3;
+    cout << "\nEnter to Date: ";
+    //cin.ignore();
+    getline(cin,str4);
+    //cout << "\n\t" << str4;
+    cout << "\nEnter number of peple: ";
+    cin >> numPeople;
+    trip.setStartLocation(str1);
+    trip.setEndLocation(str2);
+    trip.setFromDate(str3);
+    trip.setToDate(str4);
+    trip.setNumberOfPeople(numPeople);
+}
+float AddHotel(vector<Hotel>& hotelList, map<int, Hotel>& hotelMap, Trip& trip, vector<Hotel>& hotelVectorInTrip){
+    string address,date;
+    cout << "\nEnter hotel address: ";
+    cin.ignore();
+    getline(cin,address);
+    cout << "\nEnter from date (dd-mm-yy): ";
+    cin >> date;
+    int i = 0;
+    for(auto& h : hotelList){
+        if(h.getHotelAddress() == address){
+            i++; 
+            cout << "\n\t" << i << " - "; h.printHotel();
+            hotelMap[i] = h;                                      
+        }
+    }
+    cout << "\nEnter number in range 1 - " << i << " : ";
+    int check; cin >> check;
+    float hotel_cost;
+    for(auto& m : hotelMap){
+        if(m.first == check){
+            hotelVectorInTrip.push_back(m.second);
+            trip.setPlace(hotelVectorInTrip);
+            hotel_cost = m.second.getRoomPrice();
+            break;
+        }
+    }
+    return hotel_cost;
+}
+float AddTransport(vector<Transport>& transportList, map<int,Transport>& transportMap, Trip& trip, vector<Transport>& transportVectorInTrip){
+    string from,to,day;
+    cout << "\nEnter from: ";
+    cin.ignore();
+    getline(cin,from);
+    cout << "\nEnter from date (dd-mm-yy): ";
+    cin >> day;
+    cout << "\nEnter to: ";
+    cin.ignore();
+    getline(cin,to);
+    int j = 0;
+    for(auto& t : transportList){
+        if(t.getDeparturePlace() == from && t.getDestination() == to){
+            j++;
+            cout << "\n\t" << j << " - "; t.printTransport();                                   
+            transportMap[j] = t;                                    
+        }
+    }
+    cout << "\nEnter number in range 1 - " << j << " : ";
+    int check1; cin >> check1;
+    float transport_cost;
+    for(auto& m : transportMap){
+        if(m.first == check1){
+            transportVectorInTrip.push_back(m.second);
+            trip.setTransportType(transportVectorInTrip);
+            transport_cost = m.second.getTicketPrice();
+            break;
+        }
+    }
+    return transport_cost;
 }

@@ -4,18 +4,19 @@
 #include "transport.hpp"
 #include "hotel.hpp"
 #include <algorithm>
+#include <vector>
 
 class Trip{
 private:
-    Transport transportType;
-    Hotel place;
+    vector<Transport> transportType;
+    vector<Hotel> place;
     string fromDate, toDate;
     string startLocation, endLocation;
     int numberOfPeople;
     float tripCost;
 public:
-    void setTransportType(Transport type){transportType = type;}
-    void setPlace(Hotel type){place = type;}
+    void setTransportType(vector<Transport> type){transportType = type;}
+    void setPlace(vector<Hotel> type){place = type;}
     void setFromDate(string type){fromDate = type;}
     void setToDate(string type){toDate = type;}
     void setStartLocation(string type){startLocation = type;}
@@ -23,8 +24,8 @@ public:
     void setNumberOfPeople(int type){numberOfPeople = type;}
     void setTripCost(float cost){tripCost = cost;}
 
-    Transport getTransportType(){return transportType;}
-    Hotel getPlace(){return place;}
+    vector<Transport> getTransportType(){return transportType;}
+    vector<Hotel> getPlace(){return place;}
     string getFromDate(){return fromDate;}
     string getToDate(){return toDate;}
     string getStartLocation(){return startLocation;}
@@ -42,8 +43,12 @@ public:
     void printTrip(){
         cout << "\n\n----------Trip Information----------";
         cout << "\n" << startLocation << " to " << endLocation << " from " << fromDate << " to " << toDate << endl;
-        transportType.printTransport();
-        place.printHotel();
+        for(auto& t : transportType){
+            t.printTransport();
+        }
+        for(auto& h : place){
+            h.printHotel();
+        }        
         cout << "Number of people: " << numberOfPeople;
         cout <<"\n\t-> Trip cost: " << tripCost;
     }
