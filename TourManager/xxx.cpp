@@ -1,33 +1,34 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
 #include <map>
 
-int main() {
-    // Khai báo kiểu dữ liệu cho các giá trị trong map
-    typedef std::string username;
-    typedef std::string password;
-
-    // Khai báo và khởi tạo map
-    std::map<username, password> accountMap;
-
-    // Mở file và đọc dữ liệu từng dòng một
-    std::ifstream inputFile("account.txt");
-    std::string line;
-    while (std::getline(inputFile, line)) {
-        // Tách dữ liệu trên mỗi dòng thành các phần tử riêng biệt
-        std::istringstream iss(line);
-        username user;
-        password pass;
-        if (iss >> user >> pass) {
-            // Lưu các phần tử vào map
-            accountMap[user] = pass;
+using namespace std;
+map<string,string> text(const string& fileName){
+    map<string,string> x;
+    ifstream file(fileName);
+    if (file.is_open()) {
+        string data;
+        while(getline(file, data)){
+            stringstream ss(data);
+            vector<string> words;
+            string word;
+            while (getline(ss, word, ';')) {
+                words.push_back(word);
+            }
+            x[words[0]] = words[1];
         }
+        file.close();
     }
+    return x;
+}
+int main() {
+    map<string,vector<int>> xx;
 
-    // In ra dữ liệu trong map
-    for (auto& account : accountMap) {
-        std::cout << "Username: " << account.first << ", Password: " << account.second << std::endl;
+    // In ra màn hình các chuỗi đã đọc được
+    for (auto w : text("signUpData.txt")) {
+        cout << w.first << " - " << w.second << endl;
     }
 
     return 0;

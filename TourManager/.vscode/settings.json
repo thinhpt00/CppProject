@@ -5,6 +5,9 @@
         "utility": "cpp",
         "string": "cpp",
         "istream": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "vector": "cpp",
+        "map": "cpp",
+        "xmemory": "cpp"
     }
 }

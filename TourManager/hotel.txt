@@ -1,6 +1,8 @@
-HaAnh HaNoi SeaView 12-5-2023 100
-MinhCuong NgheAn MountainView 12-5-2023 100
-HaAnh HaNoi MountainView 12-5-2023 200
-HaAnh HaNoi CityView 12-5-2023 150
-HaAnh HaNoi PrivateView 12-5-2023 300
-HaAnh ThanhHoa SeaView 12-5-2023 120
+Ha Anh;HaNoi;Single View;12-5-2023;100;
+Minh Cuong;NgheAn;Single View;12-5-2023;100;
+Ha Anh;HaNoi;Single View;12-5-2023;200;
+Ha Anh;HaNoi;Single View;12-5-2023;150;
+Ha Anh;HaNoi;Single View;12-5-2023;300;
+Ha Anh;ThanhHoa;Single View;12-5-2023;120;
+Minh Cuong;PhuQuoc;Single View;12-5-2023;100;
+Minh Cuong;PhuQuoc;Single View;12-5-2023;100;

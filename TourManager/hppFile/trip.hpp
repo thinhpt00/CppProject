@@ -3,6 +3,7 @@
 
 #include "transport.hpp"
 #include "hotel.hpp"
+#include <algorithm>
 
 class Trip{
 private:
@@ -31,8 +32,15 @@ public:
     int getNumberOfPeople(){return numberOfPeople;}
     float getTripCost(){return tripCost;}
 
+    friend bool operator < (Trip& trip1,Trip& trip2){
+        return (trip1.tripCost < trip2.tripCost) ? true : false;
+    }
+    friend bool operator > (Trip& trip1,Trip& trip2){
+        return (trip1.tripCost > trip2.tripCost) ? true : false;
+    }
+
     void printTrip(){
-        cout << "\nTrip Information: ";
+        cout << "\n\n----------Trip Information----------";
         cout << "\n" << startLocation << " to " << endLocation << " from " << fromDate << " to " << toDate << endl;
         transportType.printTransport();
         place.printHotel();
