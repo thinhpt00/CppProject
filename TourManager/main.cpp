@@ -23,7 +23,7 @@ vector<Hotel> readHotelInformationFromTextFile(const string& fileName);
 int main(){
     //user
     vector<User> userList;
-    userList = readUserInformationFromTextFile("signUpData.txt");
+    userList = readUserInformationFromTextFile("userData.txt");
     // for(auto& u : userList){
     //     u.printUser();
     // }
@@ -79,7 +79,7 @@ int main(){
 
     // Password, username
     // map<string,string> saveDataToText;
-    // ifstream inputFile("signUpData.txt");
+    // ifstream inputFile("userData.txt");
     // string line;
     // while (getline(inputFile, line)) {
     //     // Tách dữ liệu trên mỗi dòng thành các phần tử riêng biệt
@@ -108,22 +108,75 @@ int main(){
             cin.ignore();
         }
         if(n == 1){
+            //vector
             string loginName, loginPassword;
             cout << "\nEnter username: ";
             cin >> loginName;
             cout << "\nEnter password: ";
             cin >> loginPassword;
             if(loginName == adminAccountName && loginPassword == adminAccountPassword){
-                cout << "\nHello, Admin!\nWhat do you want?";
-                cout << "\n1: viewListUserAccount";
-                cout << "\n2: editUserAccount";
-                cout << "\n3: deleteUserAccount";
-                cout << "\n4: viewServiceInformation";
-                cout << "\n5: addServiceInformation";
-                cout << "\n6: deleteServiceInformation";
-                cout << "\n7: saveSystemData";
-                cout << "\n8: loadSystemData";
-                cout << "\n\nEnter number in range 1 - 8: ";
+                int n4;
+                do{
+                    cout << "\nHello, Admin!\nWhat do you want?";
+                    cout << "\n\t1: View List User Account";
+                    cout << "\n\t2: Edit User Account";
+                    cout << "\n\t3: Delete User Account";
+                    cout << "\n\t4: viewServiceInformation";
+                    cout << "\n\t5: addServiceInformation";
+                    cout << "\n\t6: deleteServiceInformation";
+                    cout << "\n\t7: saveSystemData";
+                    cout << "\n\t8: loadSystemData";
+                    cout << "\n\t0: Done";
+                    cout << "\nEnter number in range 0 - 8: ";
+                    cin >> n4;
+                    if(n4 == 1){
+                        cout << "\n------------List User Account------------";
+                        for(int i = 0; i < userList.size(); ++i){
+                            cout << "Account " << i+1 << ": " << userList[i].getAccountName() << endl;
+                        }
+                    }
+                    else if(n4 == 2){
+
+                    }
+                    else if(n4 == 3){
+                        cout << "\n------------Delete User Account------------";
+                        cout << "\nWhich account do you want to delete? ";
+                        cout << "\nEnter username: ";
+                        string user_name;
+                        cin >> user_name;
+                        bool check1 = false;
+                        int index = 0;
+                        for(int i = 0; i < userList.size(); ++i){
+                            if(userList[i].getAccountName() == user_name){
+                                check1 = true;
+                                index = i;
+                                break;
+                            } 
+                        }
+                        if(check1 == false){
+                            cout << "\nDo not exist account " << user_name << "!!";
+                        }
+                        else{
+                            userList.erase(userList.begin() + index - 1);
+                        }
+                    }
+                    else if(n4 == 4){
+                        
+                    }
+                    else if(n4 == 5){
+                        
+                    }
+                    else if(n4 == 6){
+                        
+                    }
+                    else if(n4 == 7){
+                        
+                    }
+                    else if(n4 == 8){
+                        
+                    }
+                }while(n4 != 0);
+                
             }
             else{
                 bool check = false;
@@ -144,13 +197,13 @@ int main(){
                     int n2; 
                     do{
                         cout << "\nHello, User!\nWhat do you want?";
-                        cout << "\n1: Add Trip";
-                        cout << "\n2: Edit Personal Information";
-                        cout << "\n3: View Trip Information";
-                        cout << "\n4: Edit Trip Information";
-                        cout << "\n5: Cancel Trip Handles";
-                        cout << "\n0: Done";
-                        cout << "\n\nEnter number in range 0 - 5: ";
+                        cout << "\n\t1: Add Trip";
+                        cout << "\n\t2: Edit Personal Information";
+                        cout << "\n\t3: View Trip Information";
+                        cout << "\n\t4: Edit Trip Information";
+                        cout << "\n\t5: Cancel Trip Handles";
+                        cout << "\n\t0: Done";
+                        cout << "\nEnter number in range 0 - 5: ";
                         cin >> n2;
                         if(n2 == 0){break;}
                         else if(n2 == 1){
@@ -244,13 +297,60 @@ int main(){
                             //
                         }
                         else if(n2 == 2){
-
+                            int n3;
+                            do{
+                                cout << "\nEnter information you want to edit: ";
+                                cout << "\n\t1: Full name";
+                                cout << "\n\t2: Age";
+                                cout << "\n\t3: Address";
+                                cout << "\n\t4: Password";
+                                cout << "\n\t0: Done";
+                                cout << "\nEnter number in range (0 - 4): ";
+                                cin >> n3;
+                                int index = 0;
+                                for(int i = 0; i < userList.size(); i++){
+                                    if(loginName == userList[i].getAccountName() && loginPassword == userList[i].getAccountPassword() ){
+                                        index = i;
+                                        break;
+                                    }
+                                }
+                                if(n3 == 1){
+                                    cout << "\nEnter new full name: ";
+                                    string fullName;
+                                    cin.ignore();
+                                    getline(cin,fullName);
+                                    userList[index].setName(fullName);
+                                    cout << "\n\t->New name edited!";
+                                }
+                                else if(n3 == 2){
+                                    cout << "\nEnter new age: ";
+                                    int age_;
+                                    cin >> age_;
+                                    userList[index].setAge(age_);
+                                    cout << "\n\t->New age edited!";
+                                }
+                                else if(n3 == 3){
+                                    cout << "\nEnter new address: ";
+                                    string address_;
+                                    cin.ignore();
+                                    getline(cin,address_);
+                                    userList[index].setAddress(address_);
+                                    cout << "\n\t->New address edited!";
+                                }
+                                else if(n3 == 4){
+                                    cout << "\nEnter new password: ";
+                                    string pass_;
+                                    cin.ignore();
+                                    getline(cin,pass_);
+                                    userList[index].setAccountPassword(pass_);
+                                    cout << "\n\t->New Password edited!";
+                                }                                
+                            }while(n3 != 0);
                         }
                         else if(n2 == 3){
                             for(auto& trip : tripList){
                                 trip.printTrip();
                             }
-
                         }
                         else if(n2 == 4){
 
@@ -270,23 +370,10 @@ int main(){
                                 }
                             }while(cancel != 0);
                         }
-
                     }
                     while(n2!=0);
                 }
             }
-            // cout << "\n1: User Account";
-            // cout << "\n2: Admin Account";
-            // cout << "\n\nEnter number in range 1 - 2: ";
-            // int n1; cin >> n1;
-            // if(n1 == 1){
-            // }
-            // else if(n1 == 2){
-            //     //
-            // }
-            // else{
-            //     //
-            // }
         }
         else if(n == 2){
             string user_name,pass,name,addr;
@@ -347,7 +434,7 @@ int main(){
     }while (n!=0);
 
 // Back-up data username, password to text file
-saveUserInformationToTextFile("signUpData.txt",userList);
+saveUserInformationToTextFile("userData.txt",userList);
 /////////////
     return 0;
 }

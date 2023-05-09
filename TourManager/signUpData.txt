@@ -1,3 +1,0 @@
-t;1;Pham The Thinh;22;Viet Hung - Dong Anh - Ha Noi;
-manh;111;Nguyen Duc Manh;21;Hung Ha - Thai Binh;
-thanh;123;Pham Huu Thanh;24;Kinh Mon - Hai Duong;
