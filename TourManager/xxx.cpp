@@ -36,30 +36,120 @@
 
 
 
+// #include <iostream>
+// #include <map>
+// #include <vector>
+// using namespace std;
+// int main() {
+//     vector<int> x = {1,2,3};
+//     vector<int> y = {1,3};
+//     vector<int> z = {3};
+//     map<int, vector<int>> my_map = {{1, x}, {2,y}, {3,z}};
+//     my_map[1] = x;
+//     my_map[2] = y;
+//     my_map[3] = z;
+//     // remove the element with key 2
+//     my_map.erase(2);
+
+//     // print the remaining elements
+//     for (const auto& pair : my_map) {
+//         std::cout << "Key: " << pair.first << std::endl;
+//         std::cout << "Values: ";
+//         for (int x : pair.second) {
+//             std::cout << x << " ";
+//         }
+//         std::cout << std::endl;
+//     }
+
+//     return 0;
+// }
+
+
+
+
+// #include <iostream>
+// #include <string>
+// #include <algorithm>
+
+// // Function to trim whitespace from the beginning and end of a string
+// std::string trim(const std::string& str)
+// {
+//     const auto strBegin = str.find_first_not_of(" \t");
+//     if (strBegin == std::string::npos)
+//         return "";
+//     const auto strEnd = str.find_last_not_of(" \t");
+//     const auto strRange = strEnd - strBegin + 1;
+//     return str.substr(strBegin, strRange);
+// }
+// std::string normalize(const std::string& str)
+// {
+//     std::string result;
+//     std::remove_copy_if(str.begin(), str.end(), std::back_inserter(result), [](char c) {
+//         return !std::isalnum(c);
+//     });
+//     return result;
+// }
+// std::string toLower(const std::string& str)
+// {
+//     std::string result = str;
+//     std::transform(str.begin(), str.end(), result.begin(), [](unsigned char c) {
+//         return std::tolower(c);
+//     });
+//     return result;
+// }
+// std::string normalizeInput(std::string& str)
+// {
+//     str = trim(str);
+//     str = normalize(str);
+//     str = toLower(str);
+//     return str;
+// }
+
+// int main()
+// {
+//     std::cout << "Enter a string to normalize:" << std::endl;
+//     std::string input;
+//     std::getline(std::cin, input);
+//     //std::string normalized = normalizeInput(input);
+//     std::cout << "Normalized string: " << normalizeInput(input) << std::endl;
+//     return 0;
+// }
+
+
+
+
 #include <iostream>
-#include <map>
-#include <vector>
-using namespace std;
-int main() {
-    vector<int> x = {1,2,3};
-    vector<int> y = {1,3};
-    vector<int> z = {3};
-    map<int, vector<int>> my_map = {{1, x}, {2,y}, {3,z}};
-    my_map[1] = x;
-    my_map[2] = y;
-    my_map[3] = z;
-    // remove the element with key 2
-    my_map.erase(2);
+#include <string>
+#include <algorithm>
+#include <cctype>
 
-    // print the remaining elements
-    for (const auto& pair : my_map) {
-        std::cout << "Key: " << pair.first << std::endl;
-        std::cout << "Values: ";
-        for (int x : pair.second) {
-            std::cout << x << " ";
+std::string normalizeString(const std::string& str) {
+    std::string result;
+    bool inWord = false;
+    for (char c : str) {
+        if (std::isspace(c)) {
+            if (inWord) {
+                inWord = false;
+                result += ' ';
+            }
+        } else {
+            if (!inWord) {
+                inWord = true;
+                result += std::toupper(c);
+            } else {
+                result += std::tolower(c);
+            }
         }
-        std::cout << std::endl;
     }
+    if (!result.empty() && result.back() == ' ') {
+        result.pop_back();
+    }
+    return result;
+}
 
+int main() {
+    std::string input = "  hA   NOi   ";
+    std::string output = normalizeString(input);
+    std::cout << output << '\n'; // This Is A String With Extra Spaces
     return 0;
 }

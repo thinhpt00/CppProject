@@ -3,11 +3,57 @@
 #include <sstream>
 #include <map>
 #include <vector>
+#include <algorithm>
+#include <cctype>
 #include "C:\Users\Thinh\Documents\Github\TourManager\hppFile\trip.hpp"
 #include "C:\Users\Thinh\Documents\Github\TourManager\hppFile\account.hpp"
 using namespace std;
 const string adminAccountName = "admin";
 const string adminAccountPassword = "111";
+// Chuẩn hóa dữ liệu nhập vào từ bàn phím
+std::string normalizeString(const std::string& str) {
+    std::string result;
+    bool inWord = false;
+    for (char c : str) {
+        if (std::isspace(c)) {
+            if (inWord) {
+                inWord = false;
+                result += ' ';
+            }
+        } else {
+            if (!inWord) {
+                inWord = true;
+                result += std::toupper(c);
+            } else {
+                result += std::tolower(c);
+            }
+        }
+    }
+    if (!result.empty() && result.back() == ' ') {
+        result.pop_back();
+    }
+    return result;
+}
+// Check điều kiện password
+bool checkPassword(string password) {
+    bool hasLower = false, hasUpper = false, hasDigit = false;
+    if (password.length() < 6) {
+        return false;
+    }
+    for (char ch : password) {
+        if (islower(ch)) {
+            hasLower = true;
+        }
+        if (isupper(ch)) {
+            hasUpper = true;
+        }
+        if (isdigit(ch)) {
+            hasDigit = true;
+        }
+    }
+    return hasLower && hasUpper && hasDigit;
+}
+
 //
 void mainMenu();
 void UserMenu();
@@ -36,8 +82,8 @@ void ViewListUserAccount(vector<User>& userList);
 void DeleteUserAccount(map<string,vector<Trip>>& booKing, vector<User>& userList);
 void EditUserAccount(vector<User>& userList);
         // 2
-void AddNewHotel(vector<Hotel>& hotelList, map<int, Hotel>& hotelMap);
-void AddNewTransport(vector<Transport>& transportList, map<int,Transport>& transportMap);
+void AddNewHotel(vector<Hotel>& hotelList);
+void AddNewTransport(vector<Transport>& transportList);
 
 // Sign Up
 void SignUp(vector<User>& userList);
@@ -56,11 +102,11 @@ int main(){
     map<string,vector<Trip>> booKing;
     // Transport
     vector<Transport> transportList;
-    map<int,Transport> transportMap;
+    //map<int,Transport> transportMap;
     transportList = readTransportInformationFromTextFile("transport.txt");
     // Hotel
     vector<Hotel> hotelList;
-    map<int,Hotel> hotelMap;
+    //map<int,Hotel> hotelMap;
     hotelList = readHotelInformationFromTextFile("hotel.txt");
 
     int n = -1;
@@ -138,7 +184,7 @@ int main(){
                                             cout << "\nEnter number in range (0 - 1): ";
                                             cin >> n7;
                                             if(n7 == 1){
-                                                AddNewHotel(hotelList,hotelMap);
+                                                AddNewHotel(hotelList);
                                             }
                                         }while(n7 != 0);                                       
                                     }
@@ -181,7 +227,7 @@ int main(){
                                             cout << "\nEnter number in range (0 - 1): ";
                                             cin >> n7;
                                             if(n7 == 1){
-                                                AddNewTransport(transportList,transportMap);
+                                                AddNewTransport(transportList);
                                             }
                                         }while(n7 != 0); 
                                     }
@@ -288,11 +334,9 @@ int main(){
                             }
                         }
                         else if(n2 == 4){
-                            //int index;
                             cout << "\nWhat trip number do you want to edit? ";
                             cout << "\nEnter number in range (1 - " << tour.size() << "): ";
                             int index; cin >> index;
-
                             int n3;
                             do{
                                 cout << "\nWhat information do you want to edit? ";
@@ -314,38 +358,11 @@ int main(){
                                     
                                 }                                        
                                 else if(n3 == 2){
-                                    //vector<Hotel> x;
                                     cout << "\nEnter new Hotel: ";
                                     AddHotel(hotelList);
-                                    // string address;
-                                    // cout << "\nEnter hotel address: ";
-                                    // getline(cin,address);
-                                    // // int i = 0;
-                                    // // for(auto& h : hotelList){
-                                    // //     if(h.getHotelAddress() == address){
-                                    // //         //i++; 
-                                    // //         cout << "\n\t" << i << " - "; h.printHotel();
-                                    // //         //hotelMap[i] = h;                                      
-                                    // //     }
-                                    // // }
-                                    // // int id;
-                                    // for(int i = 0; i < hotelList.size(); ++i){
-                                    //     if(hotelList[i].getHotelAddress() == address){
-                                    //         cout << "\n\t" << i << " - "; hotelList[i].printHotel();
-                                    //     }
-                                    // }
-                                    // cout << "\nEnter number in range 1 - " << hotelList.size() << " : ";
                                     int id; cin >> id;
                                     HOTEL[index - 1] = hotelList[id - 1];
                                     tour[index - 1].setPlace(HOTEL);
-                                    // float hotel_cost;
-                                    // for(auto& m : hotelMap){
-                                    //     if(m.first == check){
-                                    //         x.push_back(m.second);
-                                    //         tour[index - 1].setPlace(x);
-                                    //         break;
-                                    //     }
-                                    // }
                                 }
                                 else if(n3 == 3){
                                     cout << "\nEnter new Start Day: ";
@@ -376,8 +393,7 @@ int main(){
                                     int n; cin >> n;
                                     tour[index - 1].setNumberOfPeople(n);
                                 }
-                            }while(n3 != 0);
-                            //tour[index - 1]. setTripCost()                            
+                            }while(n3 != 0);                          
                         }
                         else if(n2 == 5){
                             CancelTripHandles(tour);
@@ -591,29 +607,6 @@ void AddHotel(vector<Hotel>& hotelList){
         }
     }
     cout << "\nEnter number in range 1 - " << hotelList.size() << " : ";
-    // int id; cin >> id;
-    // hotelVectorInTrip.push_back(hotelList[id - 1]);
-    // trip.setPlace(hotelVectorInTrip);
-    // int i = 0;
-    // for(auto& h : hotelList){
-    //     if(h.getHotelAddress() == address){
-    //         i++; 
-    //         cout << "\n\t" << i << " - "; h.printHotel();
-    //         hotelMap[i] = h;                                      
-    //     }
-    // }
-    // cout << "\nEnter number in range 1 - " << i << " : ";
-    // int check; cin >> check;
-    // float hotel_cost;
-    // for(auto& m : hotelMap){
-    //     if(m.first == check){
-    //         hotelVectorInTrip.push_back(m.second);
-    //         trip.setPlace(hotelVectorInTrip);
-    //         hotel_cost = m.second.getRoomPrice();
-    //         break;
-    //     }
-    // }
-    // return hotel_cost;
 }
 void AddTransport(vector<Transport>& transportList){
     string from,to,day;
@@ -631,26 +624,6 @@ void AddTransport(vector<Transport>& transportList){
         }
     }
     cout << "\nEnter number in range 1 - " << transportList.size() << " : ";
-    // int j = 0;
-    // for(auto& t : transportList){
-    //     if(t.getDeparturePlace() == from && t.getDestination() == to){
-    //         j++;
-    //         cout << "\n\t" << j << " - "; t.printTransport();                                   
-    //         transportMap[j] = t;                                    
-    //     }
-    // }
-    // cout << "\nEnter number in range 1 - " << j << " : ";
-    // int check1; cin >> check1;
-    // float transport_cost;
-    // for(auto& m : transportMap){
-    //     if(m.first == check1){
-    //         transportVectorInTrip.push_back(m.second);
-    //         trip.setTransportType(transportVectorInTrip);
-    //         transport_cost = m.second.getTicketPrice();
-    //         break;
-    //     }
-    // }
-    // return transport_cost;
 }
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword){
     int n3;
@@ -830,7 +803,7 @@ void EditUserAccount(vector<User>& userList){
         }       
     }while(n != 0);
 }
-void AddNewHotel(vector<Hotel>& hotelList, map<int, Hotel>& hotelMap){
+void AddNewHotel(vector<Hotel>& hotelList){
     Hotel x;
     string hotel_name,address,room_type,date;
     int price;
@@ -851,9 +824,8 @@ void AddNewHotel(vector<Hotel>& hotelList, map<int, Hotel>& hotelMap){
     x.setStartDay(date);
     x.setRoomPrice(price);
     hotelList.push_back(x);
-    hotelMap[hotelList.size()] = x;
 }
-void AddNewTransport(vector<Transport>& transportList, map<int,Transport>& transportMap){
+void AddNewTransport(vector<Transport>& transportList){
     string transportName,transportBrand,departureDay,departurePlace,destination;
     float ticketPrice;
     Transport x;
@@ -878,5 +850,4 @@ void AddNewTransport(vector<Transport>& transportList, map<int,Transport>& trans
     x.setDestination(destination);
     x.setTicketPrice(ticketPrice);
     transportList.push_back(x);
-    transportMap[transportList.size()] = x;
 }
