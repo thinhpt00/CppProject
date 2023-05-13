@@ -11,49 +11,11 @@ using namespace std;
 const string adminAccountName = "admin";
 const string adminAccountPassword = "111";
 // Chuẩn hóa dữ liệu nhập vào từ bàn phím
-std::string normalizeString(const std::string& str) {
-    std::string result;
-    bool inWord = false;
-    for (char c : str) {
-        if (std::isspace(c)) {
-            if (inWord) {
-                inWord = false;
-                result += ' ';
-            }
-        } else {
-            if (!inWord) {
-                inWord = true;
-                result += std::toupper(c);
-            } else {
-                result += std::tolower(c);
-            }
-        }
-    }
-    if (!result.empty() && result.back() == ' ') {
-        result.pop_back();
-    }
-    return result;
-}
+string NormalizeString(const string& str);
 // Check điều kiện password
-bool checkPassword(string password) {
-    bool hasLower = false, hasUpper = false, hasDigit = false;
-    if (password.length() < 6) {
-        return false;
-    }
-    for (char ch : password) {
-        if (islower(ch)) {
-            hasLower = true;
-        }
-        if (isupper(ch)) {
-            hasUpper = true;
-        }
-        if (isdigit(ch)) {
-            hasDigit = true;
-        }
-    }
-    return hasLower && hasUpper && hasDigit;
-}
-
+bool CheckPassword(string password);
+// Check tài khoản username trùng
+bool CheckUsername(string username,vector<User>& userList);
 //
 void mainMenu();
 void UserMenu();
@@ -72,8 +34,8 @@ void SaveHotelToTextFile(const string &filename, const vector<Hotel> &hotel);
 // Login
     // User
 void AddTrip(Trip& trip);
-void AddHotel(vector<Hotel>& hotelList);
-void AddTransport(vector<Transport>& transportList);
+Hotel AddHotel(vector<Hotel>& hotelList);
+Transport AddTransport(vector<Transport> transportList);
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword);
 void CancelTripHandles(vector<Trip>& tour);
     // Admin
@@ -98,15 +60,12 @@ int main(){
     userList = readUserInformationFromTextFile("userData.txt");
     // Trip
     vector<Trip> tripList;
-    map<int,Trip> tripMap;
     map<string,vector<Trip>> booKing;
     // Transport
     vector<Transport> transportList;
-    //map<int,Transport> transportMap;
     transportList = readTransportInformationFromTextFile("transport.txt");
     // Hotel
     vector<Hotel> hotelList;
-    //map<int,Hotel> hotelMap;
     hotelList = readHotelInformationFromTextFile("hotel.txt");
 
     int n = -1;
@@ -280,12 +239,17 @@ int main(){
                 }
                 else{
                     vector<Trip> tour;
-                    vector<Hotel> HOTEL;
-                    vector<Transport> TRANSPORT;
+                    vector<vector<Hotel>> hotelLogin;
+                    vector<vector<Transport>> transportLogin;
+                    // vector<Hotel> HOTEL;
+                    // vector<Transport> TRANSPORT;
                     int n2; 
                     do{
                         UserMenu();
                         cin >> n2;
+                        vector<Hotel> HOTEL;
+                        vector<Transport> TRANSPORT;
+                        // vector<vector<Hotel>> 
                         if(n2 == 0){break;}
                         else if(n2 == 1){
                             //Trip
@@ -296,21 +260,25 @@ int main(){
                             AddTrip(trip);
                             int n5;
                             do{
+                                cout << "\nEnter Service: ";
                                 cout << "\n\t1: Add Hotel";
                                 cout << "\n\t2: Add Transport";
                                 cout << "\n\t0: Done";
+                                cout << "\nEnter number in range (0 - 2): ";
                                 cin >> n5;
                                 if(n5 == 1){
-                                    int id; cin >> id;
-                                    AddHotel(hotelList);
-                                    HOTEL.push_back(hotelList[id - 1]);
+                                    // AddHotel(hotelList);
+                                    // int id; cin >> id;
+                                    HOTEL.push_back(AddHotel(hotelList));
                                     trip.setPlace(HOTEL);
+                                    // hotelLogin.push_back(HOTEL);
                                 }
                                 else if( n5 == 2){
-                                    int id; cin >> id;
-                                    AddTransport(transportList);
-                                    TRANSPORT.push_back(transportList[id - 1]);
+                                    // AddTransport(transportList);
+                                    // int id; cin >> id;
+                                    TRANSPORT.push_back(AddTransport(transportList));
                                     trip.setTransportType(TRANSPORT);
+                                    transportLogin.push_back(TRANSPORT);
                                 }
                             }while(n5 != 0);
                             for(auto& h : HOTEL){
@@ -329,74 +297,102 @@ int main(){
                             EditPersonalInformation(userList,loginName,loginPassword);
                         }
                         else if(n2 == 3){
-                            for(auto& trip : tour){
-                                trip.printTrip();
+                            if(tour.empty()){
+                                cout << "\nNO DATA";
+                            }
+                            else{
+                                for(auto& trip : tour){
+                                    trip.printTrip();
+                                }
                             }
                         }
                         else if(n2 == 4){
-                            cout << "\nWhat trip number do you want to edit? ";
-                            cout << "\nEnter number in range (1 - " << tour.size() << "): ";
-                            int index; cin >> index;
-                            int n3;
-                            do{
-                                cout << "\nWhat information do you want to edit? ";
-                                cout << "\n\t1: Transport";
-                                cout << "\n\t2: Hotel";
-                                cout << "\n\t3: Start Day";
-                                cout << "\n\t4: Come Back Day";
-                                cout << "\n\t5: Start Place";
-                                cout << "\n\t6: Destination";
-                                cout << "\n\t7: Number of people";
-                                cout << "\n\t0: Done";
-                                cin >> n3;
-                                if(n3 == 1){
-                                    cout << "\nEnter new Transport: ";
-                                    AddTransport(transportList);
-                                    int id; cin >> id;
-                                    TRANSPORT[index - 1] = transportList[id - 1];
-                                    tour[index - 1].setTransportType(TRANSPORT);
-                                    
-                                }                                        
-                                else if(n3 == 2){
-                                    cout << "\nEnter new Hotel: ";
-                                    AddHotel(hotelList);
-                                    int id; cin >> id;
-                                    HOTEL[index - 1] = hotelList[id - 1];
-                                    tour[index - 1].setPlace(HOTEL);
-                                }
-                                else if(n3 == 3){
-                                    cout << "\nEnter new Start Day: ";
-                                    string s;
-                                    getline(cin,s);
-                                    tour[index-1].setFromDate(s);
-                                }
-                                else if(n3 == 4){
-                                    cout << "\nEnter new Come Back Day: ";
-                                    string s;
-                                    getline(cin,s);
-                                    tour[index-1].setToDate(s);
-                                }
-                                else if(n3 == 5){
-                                    cout << "\nEnter new Start Place: ";
-                                    string s;
-                                    getline(cin,s);
-                                    tour[index-1].setStartLocation(s);
-                                }
-                                else if(n3 == 6){
-                                    cout << "\nEnter new Destination: ";
-                                    string s;
-                                    getline(cin,s);
-                                    tour[index-1].setEndLocation(s);
-                                }
-                                else if(n3 == 7){
-                                    cout << "\nEnter new Number of people: ";
-                                    int n; cin >> n;
-                                    tour[index - 1].setNumberOfPeople(n);
-                                }
-                            }while(n3 != 0);                          
+                            if(tour.empty()){
+                                cout << "\nNO DATA";
+                            }
+                            else{
+                                cout << "\nWhat trip number do you want to edit? ";
+                                cout << "\nEnter number in range (1 - " << tour.size() << "): ";
+                                int index; cin >> index;
+                                int n3;
+                                do{
+                                    cout << "\nWhat information do you want to edit? ";
+                                    cout << "\n\t1: Transport";
+                                    cout << "\n\t2: Hotel";
+                                    cout << "\n\t3: Start Day";
+                                    cout << "\n\t4: Come Back Day";
+                                    cout << "\n\t5: Start Place";
+                                    cout << "\n\t6: Destination";
+                                    cout << "\n\t7: Number of people";
+                                    cout << "\n\t0: Done";
+                                    cout << "\nEnter number in range (0-7): ";
+                                    cin >> n3;
+                                    if(n3 == 1){
+                                        cout << "\n\tEnter new Transport: ";
+                                        // AddTransport(transportList);
+                                        // int id; cin >> id;
+                                        // Transport x;
+                                        // x = AddTransport(transportList);
+                                        // x.printTransport();
+                                        // cout <<TRANSPORT.size()<<endl;
+                                        // cout <<transportLogin[index-1].size()<<endl;
+                                        // transportLogin[index-1][index-1] = x;                                  
+                                        // TRANSPORT[index - 1] = x;
+                                        // TRANSPORT[index - 1].printTransport();
+                                        transportLogin[index-1][index-1] = AddTransport(transportList);
+                                        tour[index - 1].setTransportType(transportLogin[index-1]);
+                                        
+                                    }                                        
+                                    else if(n3 == 2){
+                                        cout << "\n\tEnter new Hotel: ";
+                                        // AddHotel(hotelList);
+                                        // int id; cin >> id;
+                                        hotelLogin[index-1][index-1] = AddHotel(hotelList);
+                                        tour[index - 1].setPlace(hotelLogin[index-1]);
+                                    }
+                                    else if(n3 == 3){
+                                        cout << "\nEnter new Start Day: ";
+                                        string s;
+                                        cin.ignore();
+                                        getline(cin,s);
+                                        tour[index-1].setFromDate(NormalizeString(s));
+                                    }
+                                    else if(n3 == 4){
+                                        cout << "\nEnter new Come Back Day: ";
+                                        string s;
+                                        cin.ignore();
+                                        getline(cin,s);
+                                        tour[index-1].setToDate(NormalizeString(s));
+                                    }
+                                    else if(n3 == 5){
+                                        cout << "\nEnter new Start Place: ";
+                                        string s;
+                                        cin.ignore();
+                                        getline(cin,s);
+                                        tour[index-1].setStartLocation(NormalizeString(s));
+                                    }
+                                    else if(n3 == 6){
+                                        cout << "\nEnter new Destination: ";
+                                        string s;
+                                        cin.ignore();
+                                        getline(cin,s);
+                                        tour[index-1].setEndLocation(NormalizeString(s));
+                                    }
+                                    else if(n3 == 7){
+                                        cout << "\nEnter new Number of people: ";
+                                        int n; cin >> n;
+                                        tour[index - 1].setNumberOfPeople(n);
+                                    }
+                                }while(n3 != 0);
+                            }                                                     
                         }
                         else if(n2 == 5){
-                            CancelTripHandles(tour);
+                            if(tour.empty()){
+                                cout << "\nNO DATA";
+                            }
+                            else{
+                                CancelTripHandles(tour);
+                            }
                         }
                     }
                     while(n2!=0);
@@ -487,9 +483,9 @@ vector<User> readUserInformationFromTextFile(const string& fileName){
             User user;
             user.setAccountName(s[0]);
             user.setAccountPassword(s[1]);
-            user.setName(s[2]);
+            user.setName(NormalizeString(s[2]));
             user.setAge(stoi(s[3]));
-            user.setAddress(s[4]);
+            user.setAddress(NormalizeString(s[4]));
             x.push_back(user);
         }
         file.close();
@@ -536,11 +532,11 @@ vector<Transport> readTransportInformationFromTextFile(const string& fileName){
                 s.push_back(word);
             }
             Transport transport_;
-            transport_.setTransportBrand(s[0]);
-            transport_.setTransportName(s[1]);
-            transport_.setDeparturePlace(s[2]);
-            transport_.setDestination(s[3]);
-            transport_.setDepartureDay(s[4]);
+            transport_.setTransportBrand(NormalizeString(s[0]));
+            transport_.setTransportName(NormalizeString(s[1]));
+            transport_.setDeparturePlace(NormalizeString(s[2]));
+            transport_.setDestination(NormalizeString(s[3]));
+            transport_.setDepartureDay(NormalizeString(s[4]));
             transport_.setTicketPrice(stof(s[5]));
             x.push_back(transport_);
         }
@@ -561,10 +557,10 @@ vector<Hotel> readHotelInformationFromTextFile(const string& fileName){
                 s.push_back(word);
             }
             Hotel hotel_;
-            hotel_.setHotelName(s[0]);
-            hotel_.setHotelAddress(s[1]);
-            hotel_.setRoomType(s[2]);
-            hotel_.setStartDay(s[3]);
+            hotel_.setHotelName(NormalizeString(s[0]));
+            hotel_.setHotelAddress(NormalizeString(s[1]));
+            hotel_.setRoomType(NormalizeString(s[2]));
+            hotel_.setStartDay(NormalizeString(s[3]));
             hotel_.setRoomPrice(stof(s[4]));
             x.push_back(hotel_);
         }
@@ -587,43 +583,68 @@ void AddTrip(Trip& trip){
     getline(cin,str4);
     cout << "\nEnter number of peple: ";
     cin >> numPeople;
-    trip.setStartLocation(str1);
-    trip.setEndLocation(str2);
-    trip.setFromDate(str3);
-    trip.setToDate(str4);
+    trip.setStartLocation(NormalizeString(str1));
+    trip.setEndLocation(NormalizeString(str2));
+    trip.setFromDate(NormalizeString(str3));
+    trip.setToDate(NormalizeString(str4));
     trip.setNumberOfPeople(numPeople);
 }
-
-void AddHotel(vector<Hotel>& hotelList){
+Hotel AddHotel(vector<Hotel>& hotelList){
+    Hotel y;
     string address,date;
     cout << "\nEnter hotel address: ";
-    //cin.ignore();
+    cin.ignore();
     getline(cin,address);
     // cout << "\nEnter from date (dd-mm-yy): ";
     // cin >> date;
-    for(int i = 0; i < hotelList.size(); ++i){
-        if(hotelList[i].getHotelAddress() == address){
-            cout << "\n\t" << i << " - "; hotelList[i].printHotel();
+    vector<Hotel> x;
+    int i = 0;
+    for(auto& h : hotelList){
+        if(h.getHotelAddress() == NormalizeString(address)){
+            x.push_back(h);
+            i++;
+            cout << "\n\t" << i << " - "; h.printHotel();
         }
     }
-    cout << "\nEnter number in range 1 - " << hotelList.size() << " : ";
+    // for(int i = 0; i < hotelList.size(); ++i){
+    //     if(hotelList[i].getHotelAddress() == NormalizeString(address)){
+    //         cout << "\n\t" << i << " - "; hotelList[i].printHotel();
+    //     }
+    // }
+    cout << "\nEnter number in range 1 - " << i << " : ";
+    int id; cin >> id;    
+    y = x[id-1];
+    return y;
 }
-void AddTransport(vector<Transport>& transportList){
+Transport AddTransport(vector<Transport> transportList){
+    Transport y;
     string from,to,day;
     cout << "\nEnter from: ";
-    //cin.ignore();
+    cin.ignore();
     getline(cin,from);
     // cout << "\nEnter from date (dd-mm-yy): ";
     // cin >> day;
     cout << "\nEnter to: ";
     //cin.ignore();
     getline(cin,to);
-    for(int i = 0; i < transportList.size(); ++i){
-        if(transportList[i].getDeparturePlace() == from && transportList[i].getDestination() == to){
-            cout << "\n\t" << i << " - "; transportList[i].printTransport();
+    vector<Transport> x;
+    int i = 0;
+    for(auto& t : transportList){
+        if(t.getDeparturePlace() == NormalizeString(from) && t.getDestination() == NormalizeString(to)){
+            x.push_back(t);
+            i++;
+            cout << "\n\t" << i << " - "; t.printTransport();
         }
     }
-    cout << "\nEnter number in range 1 - " << transportList.size() << " : ";
+    // for(int i = 0; i < transportList.size(); ++i){
+    //     if(transportList[i].getDeparturePlace() == NormalizeString(from) && transportList[i].getDestination() == NormalizeString(to)){
+    //         cout << "\n\t" << i << " - "; transportList[i].printTransport();
+    //     }
+    // }
+    cout << "\nEnter number in range 1 - " << i << " : ";
+    int id; cin >> id;    
+    y = x[id-1];
+    return y;
 }
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword){
     int n3;
@@ -648,7 +669,7 @@ void EditPersonalInformation(vector<User>& userList,string& loginName, string& l
             string fullName;
             cin.ignore();
             getline(cin,fullName);
-            userList[index].setName(fullName);
+            userList[index].setName(NormalizeString(fullName));
             cout << "\n\t->New name edited!";
         }
         else if(n3 == 2){
@@ -663,7 +684,7 @@ void EditPersonalInformation(vector<User>& userList,string& loginName, string& l
             string address_;
             cin.ignore();
             getline(cin,address_);
-            userList[index].setAddress(address_);
+            userList[index].setAddress(NormalizeString(address_));
             cout << "\n\t->New address edited!";
         }
         else if(n3 == 4){
@@ -671,6 +692,11 @@ void EditPersonalInformation(vector<User>& userList,string& loginName, string& l
             string pass_;
             cin.ignore();
             getline(cin,pass_);
+            while(CheckPassword(pass_) == false){
+                cout << "\nPassword must have more than 6 characters, uppercase, lowercase! Enter again: ";
+                cout << "\nEnter new password: ";
+                cin >> pass_;
+            }
             userList[index].setAccountPassword(pass_);
             cout << "\n\t->New Password edited!";
         }                                
@@ -694,11 +720,21 @@ void CancelTripHandles(vector<Trip>& tour){
 void SignUp(vector<User>& userList){
     string user_name,pass,name,addr;
     cout << "\nEnter your username: ";
-    cin.ignore();
-    getline(cin,user_name);
+    cin >> user_name;
+    while(CheckUsername(user_name,userList) == false){
+        cout << "\nUsername had existed! Enter again: ";
+        cout << "\nEnter your username: ";
+        cin >> user_name;
+    }
     cout << "\nEnter your password: ";
-    getline(cin,pass);
+    cin >> pass;
+    while(CheckPassword(pass) == false){
+        cout << "\nPassword must have more than 6 characters, uppercase, lowercase! Enter again: ";
+        cout << "\nEnter your password: ";
+        cin >> pass;
+    }
     cout << "\nEnter your full name: ";
+    cin.ignore();
     getline(cin,name);
     cout << "\nEnter your age: ";
     int AGE; cin >> AGE;
@@ -708,9 +744,9 @@ void SignUp(vector<User>& userList){
     User user;
     user.setAccountName(user_name);
     user.setAccountPassword(pass);
-    user.setName(name);
+    user.setName(NormalizeString(name));
     user.setAge(AGE);
-    user.setAddress(addr);
+    user.setAddress(NormalizeString(addr));
     userList.push_back(user);          
     cout << "\n\tUser Account Sign up Successfully\n\n";
 }
@@ -720,7 +756,7 @@ void SearchRoomByLocation(vector<Hotel>& hotelList){
     cin.ignore();
     getline(cin,find_hotel);
     for(auto& h : hotelList){
-        if(h.getHotelAddress() == find_hotel){
+        if(h.getHotelAddress() == NormalizeString(find_hotel)){
             h.printHotel();
         }
     }
@@ -731,7 +767,7 @@ void SearchTransportByLocation(vector<Transport>& transportList){
     cin.ignore();
     getline(cin,find_transport);
     for(auto& t : transportList){
-        if(t.getDeparturePlace() == find_transport){
+        if(t.getDeparturePlace() == NormalizeString(find_transport)){
             t.printTransport();
         }
     }
@@ -818,10 +854,11 @@ void AddNewHotel(vector<Hotel>& hotelList){
     getline(cin,date);
     cout << "\nEnter new room price: ";
     cin >> price;
-    x.setHotelName(hotel_name);
-    x.setHotelAddress(address);
-    x.setRoomType(room_type);
-    x.setStartDay(date);
+    // x.setHotelName(hotel_name);
+    x.setHotelName(NormalizeString(hotel_name));
+    x.setHotelAddress(NormalizeString(address));
+    x.setRoomType(NormalizeString(room_type));
+    x.setStartDay(NormalizeString(date));
     x.setRoomPrice(price);
     hotelList.push_back(x);
 }
@@ -843,11 +880,67 @@ void AddNewTransport(vector<Transport>& transportList){
     getline(cin,destination);
     cout << "\nEnter ticket price: ";
     cin >> ticketPrice;
-    x.setTransportBrand(transportBrand);
-    x.setTransportName(transportName);
-    x.setDepartureDay(departureDay);
-    x.setDeparturePlace(departurePlace);
-    x.setDestination(destination);
+    x.setTransportBrand(NormalizeString(transportBrand));
+    x.setTransportName(NormalizeString(transportName));
+    x.setDepartureDay(NormalizeString(departureDay));
+    x.setDeparturePlace(NormalizeString(departurePlace));
+    x.setDestination(NormalizeString(destination));
     x.setTicketPrice(ticketPrice);
     transportList.push_back(x);
+}
+string NormalizeString(const string& str) {
+    string result;
+    bool inWord = false;
+    for (char c : str) {
+        if (isspace(c)) {
+            if (inWord) {
+                inWord = false;
+                result += ' ';
+            }
+        } else {
+            if (!inWord) {
+                inWord = true;
+                result += toupper(c);
+            } else {
+                result += tolower(c);
+            }
+        }
+    }
+    if (!result.empty() && result.back() == ' ') {
+        result.pop_back();
+    }
+    return result;
+}
+bool CheckPassword(string password) {
+    bool hasLower = false, hasUpper = false, hasDigit = false;
+    if (password.length() < 6) {
+        return false;
+    }
+    for (char ch : password) {
+        if (islower(ch)) {
+            hasLower = true;
+        }
+        if (isupper(ch)) {
+            hasUpper = true;
+        }
+        if (isdigit(ch)) {
+            hasDigit = true;
+        }
+    }
+    return hasLower && hasUpper && hasDigit;
+}
+bool CheckUsername(string username,vector<User>& userList){
+    bool check = false;
+    for(auto& u : userList){
+        if(u.getAccountName() == username){
+            check = true;
+            break;
+        }
+    }
+    if(check == true){
+        return false;
+    }
+    else{
+        return true;
+    }
 }

@@ -71,39 +71,38 @@
 // #include <string>
 // #include <algorithm>
 
-// // Function to trim whitespace from the beginning and end of a string
-// std::string trim(const std::string& str)
-// {
-//     const auto strBegin = str.find_first_not_of(" \t");
-//     if (strBegin == std::string::npos)
-//         return "";
-//     const auto strEnd = str.find_last_not_of(" \t");
-//     const auto strRange = strEnd - strBegin + 1;
-//     return str.substr(strBegin, strRange);
-// }
-// std::string normalize(const std::string& str)
-// {
-//     std::string result;
-//     std::remove_copy_if(str.begin(), str.end(), std::back_inserter(result), [](char c) {
-//         return !std::isalnum(c);
-//     });
-//     return result;
-// }
-// std::string toLower(const std::string& str)
-// {
-//     std::string result = str;
-//     std::transform(str.begin(), str.end(), result.begin(), [](unsigned char c) {
-//         return std::tolower(c);
-//     });
-//     return result;
-// }
-// std::string normalizeInput(std::string& str)
-// {
-//     str = trim(str);
-//     str = normalize(str);
-//     str = toLower(str);
-//     return str;
-// }
+std::string trim(const std::string& str)
+{
+    const auto strBegin = str.find_first_not_of(" \t");
+    if (strBegin == std::string::npos)
+        return "";
+    const auto strEnd = str.find_last_not_of(" \t");
+    const auto strRange = strEnd - strBegin + 1;
+    return str.substr(strBegin, strRange);
+}
+std::string normalize(const std::string& str)
+{
+    std::string result;
+    std::remove_copy_if(str.begin(), str.end(), std::back_inserter(result), [](char c) {
+        return !std::isalnum(c);
+    });
+    return result;
+}
+std::string toLower(const std::string& str)
+{
+    std::string result = str;
+    std::transform(str.begin(), str.end(), result.begin(), [](unsigned char c) {
+        return std::tolower(c);
+    });
+    return result;
+}
+std::string normalizeInput(std::string& str)
+{
+    str = trim(str);
+    str = normalize(str);
+    str = toLower(str);
+    return str;
+}
 
 // int main()
 // {
@@ -148,7 +147,7 @@ std::string normalizeString(const std::string& str) {
 }
 
 int main() {
-    std::string input = "  hA   NOi   ";
+    std::string input = "  23 - 25 -       2023   ";
     std::string output = normalizeString(input);
     std::cout << output << '\n'; // This Is A String With Extra Spaces
     return 0;

@@ -15,6 +15,7 @@ private:
     string destination;
     float ticketPrice;
 public:
+    Transport(){};
     void setTransportName(string name){transportName = name;}
     void setTransportBrand(string brand){transportBrand = brand;}
     void setDepartureDay(string day){departureDay = day;}
@@ -28,6 +29,15 @@ public:
     string getDeparturePlace(){return departurePlace;}
     string getDestination(){return destination;}
     float getTicketPrice(){return ticketPrice;}
+    // Transport operator=(Transport other){
+    //     this->departureDay = other.getDepartureDay();
+    //     this->departurePlace = other.departurePlace;
+    //     this->destination = other.destination;
+    //     this->ticketPrice = other.ticketPrice;
+    //     this->transportBrand = other.transportBrand;
+    //     this->transportName = other.transportName;
+    //     return *this;
+    // }
 
     void printTransport(){
         cout << transportBrand << " " <<  transportName << " " <<  departurePlace << " " <<  destination << " " <<  departureDay << " " <<  ticketPrice << " " << endl;
