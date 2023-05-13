@@ -37,7 +37,23 @@ void AddTrip(Trip& trip);
 Hotel AddHotel(vector<Hotel>& hotelList);
 Transport AddTransport(vector<Transport> transportList);
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword);
+// Tính tiền chuyến đi
+float Payment(vector<Hotel>& HOTEL, vector<Transport> TRANSPORT){
+    float trip_cost;
+    float hotel_cost = 0;
+    float transport_cost = 0;
+    for(auto& h : HOTEL){
+        hotel_cost += h.getRoomPrice();
+    }
+    for(auto& t : TRANSPORT){
+        transport_cost += t.getTicketPrice();
+    }
+    trip_cost = hotel_cost + transport_cost;
+    return trip_cost;
+}
+//
 void CancelTripHandles(vector<Trip>& tour);
+
     // Admin
         // 1
 void ViewListUserAccount(vector<User>& userList);
@@ -254,9 +270,9 @@ int main(){
                         else if(n2 == 1){
                             //Trip
                             Trip trip;
-                            float trip_cost;
-                            float hotel_cost = 0;
-                            float transport_cost = 0;
+                            // float trip_cost;
+                            // float hotel_cost = 0;
+                            // float transport_cost = 0;
                             AddTrip(trip);
                             int n5;
                             do{
@@ -270,25 +286,32 @@ int main(){
                                     // AddHotel(hotelList);
                                     // int id; cin >> id;
                                     HOTEL.push_back(AddHotel(hotelList));
-                                    trip.setPlace(HOTEL);
+                                    // trip.setPlace(HOTEL);
                                     // hotelLogin.push_back(HOTEL);
                                 }
                                 else if( n5 == 2){
                                     // AddTransport(transportList);
                                     // int id; cin >> id;
                                     TRANSPORT.push_back(AddTransport(transportList));
-                                    trip.setTransportType(TRANSPORT);
-                                    transportLogin.push_back(TRANSPORT);
+                                    // trip.setTransportType(TRANSPORT);
+                                    // transportLogin.push_back(TRANSPORT);
                                 }
-                            }while(n5 != 0);
-                            for(auto& h : HOTEL){
-                                hotel_cost += h.getRoomPrice();
                             }
-                            for(auto& t : TRANSPORT){
-                                transport_cost += t.getTicketPrice();
-                            }
-                            trip_cost = (hotel_cost + transport_cost) * trip.getNumberOfPeople();
-                            trip.setTripCost(trip_cost);                            
+                            while(n5 != 0);
+                            hotelLogin.push_back(HOTEL);
+                            transportLogin.push_back(TRANSPORT);
+                            // for(auto& h : HOTEL){
+                            //     hotel_cost += h.getRoomPrice();
+                            // }
+                            // for(auto& t : TRANSPORT){
+                            //     transport_cost += t.getTicketPrice();
+                            // }
+                            // trip_cost = (hotel_cost + transport_cost) * trip.getNumberOfPeople();
+
+                            trip.setPlace(HOTEL);
+                            trip.setTransportType(TRANSPORT);
+                            trip.setTripCost(Payment(HOTEL,TRANSPORT)*trip.getNumberOfPeople());
+
                             tour.push_back(trip);
                             tripList.push_back(trip);
                             //
@@ -315,6 +338,8 @@ int main(){
                                 cout << "\nEnter number in range (1 - " << tour.size() << "): ";
                                 int index; cin >> index;
                                 int n3;
+                                vector<Transport> replace_Transport;
+                                vector<Hotel> replace_Hotel;
                                 do{
                                     cout << "\nWhat information do you want to edit? ";
                                     cout << "\n\t1: Transport";
@@ -327,28 +352,41 @@ int main(){
                                     cout << "\n\t0: Done";
                                     cout << "\nEnter number in range (0-7): ";
                                     cin >> n3;
+                                    
                                     if(n3 == 1){
                                         cout << "\n\tEnter new Transport: ";
                                         // AddTransport(transportList);
                                         // int id; cin >> id;
-                                        // Transport x;
-                                        // x = AddTransport(transportList);
-                                        // x.printTransport();
+                                        // vector<Transport> x;
+                                        replace_Transport.push_back(AddTransport(transportList));
+                                        //x.printTransport();
                                         // cout <<TRANSPORT.size()<<endl;
                                         // cout <<transportLogin[index-1].size()<<endl;
                                         // transportLogin[index-1][index-1] = x;                                  
                                         // TRANSPORT[index - 1] = x;
                                         // TRANSPORT[index - 1].printTransport();
-                                        transportLogin[index-1][index-1] = AddTransport(transportList);
-                                        tour[index - 1].setTransportType(transportLogin[index-1]);
+                                        tour[index-1].setTransportType(replace_Transport);
+                                        // TransportPayment(replace_Transport);
+                                        //AddTransport(transportList).printTransport();
+                                        // tour[index-1].getTransportType()[index-1].printTransport();
+                                        // tour[index-1].printTrip();
+                                        // for(auto& trip : tour){
+                                        //     trip.printTrip();
+                                        // }
+                                        //tour[index - 1].setTransportType(tour[index-1].getTransportType());
+                                        //transportLogin[index-1][index-1] = AddTransport(transportList);
+                                        // tour[index - 1].setTransportType(transportLogin[index-1]);
                                         
                                     }                                        
                                     else if(n3 == 2){
                                         cout << "\n\tEnter new Hotel: ";
                                         // AddHotel(hotelList);
                                         // int id; cin >> id;
-                                        hotelLogin[index-1][index-1] = AddHotel(hotelList);
-                                        tour[index - 1].setPlace(hotelLogin[index-1]);
+                                        replace_Hotel.push_back(AddHotel(hotelList));
+                                        tour[index-1].setPlace(replace_Hotel);
+                                        // HotelPayment(replace_Hotel);
+                                        // hotelLogin[index-1][index-1] = AddHotel(hotelList);
+                                        // tour[index - 1].setPlace(hotelLogin[index-1]);
                                     }
                                     else if(n3 == 3){
                                         cout << "\nEnter new Start Day: ";
@@ -383,7 +421,20 @@ int main(){
                                         int n; cin >> n;
                                         tour[index - 1].setNumberOfPeople(n);
                                     }
-                                }while(n3 != 0);
+                                }
+                                while(n3 != 0);
+                                if(replace_Transport.empty() && replace_Hotel.empty()){
+                                    tour[index-1].setTripCost(Payment(hotelLogin[index-1],transportLogin[index-1])*tour[index-1].getNumberOfPeople());
+                                }
+                                else if(replace_Transport.empty() && !replace_Hotel.empty()){
+                                    tour[index-1].setTripCost(Payment(replace_Hotel,transportLogin[index-1])*tour[index-1].getNumberOfPeople());
+                                }
+                                else if(!replace_Transport.empty() && replace_Hotel.empty()){
+                                    tour[index-1].setTripCost(Payment(hotelLogin[index-1],replace_Transport)*tour[index-1].getNumberOfPeople());
+                                }
+                                else{
+                                    tour[index-1].setTripCost(Payment(replace_Hotel,replace_Transport)*tour[index-1].getNumberOfPeople());
+                                }                              
                             }                                                     
                         }
                         else if(n2 == 5){
