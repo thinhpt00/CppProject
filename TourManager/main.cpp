@@ -625,54 +625,69 @@ void AddTrip(Trip& trip){
 }
 Hotel AddHotel(vector<Hotel>& hotelList){
     Hotel y;
-    string address,date;
-    cout << "\nEnter hotel address: ";
-    cin.ignore();
-    getline(cin,address);
-    // cout << "\nEnter from date (dd-mm-yy): ";
-    // cin >> date;
     vector<Hotel> x;
+    string address,date;
     int i = 0;
-    for(auto& h : hotelList){
-        if(h.getHotelAddress() == NormalizeString(address)){
-            x.push_back(h);
-            i++;
-            cout << "\n\t" << i << " - "; h.printHotel();
+    do{
+        
+        cout << "\nEnter hotel address: ";
+        fflush(stdin);
+        getline(cin,address);
+        // cout << "\nEnter from date (dd-mm-yy): ";
+        // cin >> date;       
+
+        for(auto& h : hotelList){
+            //cout << address << endl;
+            if(h.getHotelAddress() == NormalizeString(address)){
+                x.push_back(h);
+                i++;
+                cout << "\n\t" << i << " - "; h.printHotel();
+            }
         }
+        if(x.empty()){
+            cout << "\nDo not find hotel in " << address << ", Please enter again: ";
+        }
+        else{
+            cout << "\nEnter number in range 1 - " << i << " : ";
+            int id; cin >> id;    
+            y = x[id-1];
+        }               
     }
-    // for(int i = 0; i < hotelList.size(); ++i){
-    //     if(hotelList[i].getHotelAddress() == NormalizeString(address)){
-    //         cout << "\n\t" << i << " - "; hotelList[i].printHotel();
-    //     }
-    // }
-    cout << "\nEnter number in range 1 - " << i << " : ";
-    int id; cin >> id;    
-    y = x[id-1];
+    while(x.empty());
     return y;
 }
 Transport AddTransport(vector<Transport> transportList){
     Transport y;
-    string from,to,day;
-    cout << "\nEnter from: ";
-    cin.ignore();
-    getline(cin,from);
-    // cout << "\nEnter from date (dd-mm-yy): ";
-    // cin >> day;
-    cout << "\nEnter to: ";
-    //cin.ignore();
-    getline(cin,to);
     vector<Transport> x;
+    string from,to,day;
     int i = 0;
-    for(auto& t : transportList){
-        if(t.getDeparturePlace() == NormalizeString(from) && t.getDestination() == NormalizeString(to)){
-            x.push_back(t);
-            i++;
-            cout << "\n\t" << i << " - "; t.printTransport();
+    do{
+        cout << "\nEnter from: ";
+        fflush(stdin);
+        getline(cin,from);
+        // cout << "\nEnter from date (dd-mm-yy): ";
+        // cin >> day;
+        cout << "\nEnter to: ";
+        getline(cin,to);
+        for(auto& t : transportList){
+            cout << from << endl;
+            cout << to << endl;
+            if(t.getDeparturePlace() == NormalizeString(from) && t.getDestination() == NormalizeString(to)){
+                x.push_back(t);
+                i++;
+                cout << "\n\t" << i << " - "; t.printTransport();
+            }
         }
+        if(x.empty()){
+            cout << "\nDo not find transport from " << from << " to " << to << ", Please enter again: ";
+        }
+        else{
+            cout << "\nEnter number in range 1 - " << i << " : ";
+            int id; cin >> id;    
+            y = x[id-1];
+        } 
     }
-    cout << "\nEnter number in range 1 - " << i << " : ";
-    int id; cin >> id;    
-    y = x[id-1];
+    while(x.empty());
     return y;
 }
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword){
@@ -738,12 +753,17 @@ void CancelTripHandles(vector<Trip>& tour){
         cout << "\n0: Done";
         cout << "\nEnter number in range (0 - 1): ";
         cin >> cancel;
+        if(tour.empty()){
+            cout << "\nNO DATA ABOUT TOUR!!";
+            break;
+        }
         if(cancel == 1){
             cout << "\n\tEnter trip you want to cancel (1 - " << tour.size() << "): ";
             int cancel_trip;
             cin >> cancel_trip;
             tour.erase(tour.begin() + cancel_trip - 1);
         }
+
     }while(cancel != 0);
 }
 void SignUp(vector<User>& userList){
