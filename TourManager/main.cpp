@@ -10,6 +10,20 @@
 using namespace std;
 const string adminAccountName = "admin";
 const string adminAccountPassword = "111";
+void ShowTransport(vector<Transport> &transport){
+    int i = 0;
+    for(auto& t : transport){
+        i++;
+       cout << "\n\t" << i << " - "; t.printTransport();
+    }
+}
+void ShowHotel(vector<Hotel> &hotel){
+    int i = 0;
+    for(auto& t : hotel){
+        i++;
+       cout << "\n\t" << i << " - "; t.printHotel();
+    }    
+}
 // Chuẩn hóa dữ liệu nhập vào từ bàn phím
 string NormalizeString(const string& str);
 // Check điều kiện password
@@ -265,14 +279,9 @@ int main(){
                         cin >> n2;
                         vector<Hotel> HOTEL;
                         vector<Transport> TRANSPORT;
-                        // vector<vector<Hotel>> 
                         if(n2 == 0){break;}
                         else if(n2 == 1){
-                            //Trip
                             Trip trip;
-                            // float trip_cost;
-                            // float hotel_cost = 0;
-                            // float transport_cost = 0;
                             AddTrip(trip);
                             int n5;
                             do{
@@ -283,35 +292,18 @@ int main(){
                                 cout << "\nEnter number in range (0 - 2): ";
                                 cin >> n5;
                                 if(n5 == 1){
-                                    // AddHotel(hotelList);
-                                    // int id; cin >> id;
                                     HOTEL.push_back(AddHotel(hotelList));
-                                    // trip.setPlace(HOTEL);
-                                    // hotelLogin.push_back(HOTEL);
                                 }
                                 else if( n5 == 2){
-                                    // AddTransport(transportList);
-                                    // int id; cin >> id;
                                     TRANSPORT.push_back(AddTransport(transportList));
-                                    // trip.setTransportType(TRANSPORT);
-                                    // transportLogin.push_back(TRANSPORT);
                                 }
                             }
                             while(n5 != 0);
                             hotelLogin.push_back(HOTEL);
                             transportLogin.push_back(TRANSPORT);
-                            // for(auto& h : HOTEL){
-                            //     hotel_cost += h.getRoomPrice();
-                            // }
-                            // for(auto& t : TRANSPORT){
-                            //     transport_cost += t.getTicketPrice();
-                            // }
-                            // trip_cost = (hotel_cost + transport_cost) * trip.getNumberOfPeople();
-
                             trip.setPlace(HOTEL);
                             trip.setTransportType(TRANSPORT);
                             trip.setTripCost(Payment(HOTEL,TRANSPORT)*trip.getNumberOfPeople());
-
                             tour.push_back(trip);
                             tripList.push_back(trip);
                             //
@@ -351,42 +343,32 @@ int main(){
                                     cout << "\n\t7: Number of people";
                                     cout << "\n\t0: Done";
                                     cout << "\nEnter number in range (0-7): ";
-                                    cin >> n3;
-                                    
+                                    cin >> n3;                                    
                                     if(n3 == 1){
-                                        cout << "\n\tEnter new Transport: ";
-                                        // AddTransport(transportList);
-                                        // int id; cin >> id;
-                                        // vector<Transport> x;
-                                        replace_Transport.push_back(AddTransport(transportList));
-                                        //x.printTransport();
-                                        // cout <<TRANSPORT.size()<<endl;
-                                        // cout <<transportLogin[index-1].size()<<endl;
-                                        // transportLogin[index-1][index-1] = x;                                  
-                                        // TRANSPORT[index - 1] = x;
-                                        // TRANSPORT[index - 1].printTransport();
-                                        tour[index-1].setTransportType(replace_Transport);
-                                        // TransportPayment(replace_Transport);
-                                        //AddTransport(transportList).printTransport();
-                                        // tour[index-1].getTransportType()[index-1].printTransport();
-                                        // tour[index-1].printTrip();
-                                        // for(auto& trip : tour){
-                                        //     trip.printTrip();
-                                        // }
-                                        //tour[index - 1].setTransportType(tour[index-1].getTransportType());
-                                        //transportLogin[index-1][index-1] = AddTransport(transportList);
-                                        // tour[index - 1].setTransportType(transportLogin[index-1]);
                                         
+                                        // cout << "\n\tEnter new Transport: ";
+                                        // replace_Transport.push_back(AddTransport(transportList));
+                                        // tour[index-1].setTransportType(replace_Transport);
+                                        cout << "\nThis is your list transport you had booked: ";
+                                        ShowTransport(transportLogin[index-1]);
+                                        cout << "\nWhat transport number do you want to edit? ";
+                                        cout << "\nEnter number in range (1 - " << transportLogin[index-1].size() << "): ";
+                                        int id; cin >> id;
+                                        cout << "\n\tEnter new Transport: ";
+                                        transportLogin[index-1][id-1] = AddTransport(transportList);
+                                        tour[index-1].setTransportType(transportLogin[index-1]);
                                     }                                        
                                     else if(n3 == 2){
+                                        cout << "\nThis is your list hotel you had booked: ";
+                                        ShowHotel(hotelLogin[index-1]);
+                                        cout << "\nWhat hotel number do you want to edit? ";
+                                        cout << "\nEnter number in range (1 - " << hotelLogin[index-1].size() << "): ";
+                                        int id; cin >> id;
                                         cout << "\n\tEnter new Hotel: ";
-                                        // AddHotel(hotelList);
-                                        // int id; cin >> id;
-                                        replace_Hotel.push_back(AddHotel(hotelList));
-                                        tour[index-1].setPlace(replace_Hotel);
-                                        // HotelPayment(replace_Hotel);
-                                        // hotelLogin[index-1][index-1] = AddHotel(hotelList);
-                                        // tour[index - 1].setPlace(hotelLogin[index-1]);
+                                        hotelLogin[index-1][id-1] = AddHotel(hotelList);
+                                        tour[index-1].setPlace(hotelLogin[index-1]);
+                                        // replace_Hotel = hotelLogin[index-1];
+                                        // tour[index-1].setPlace(replace_Hotel);
                                     }
                                     else if(n3 == 3){
                                         cout << "\nEnter new Start Day: ";
@@ -423,18 +405,19 @@ int main(){
                                     }
                                 }
                                 while(n3 != 0);
-                                if(replace_Transport.empty() && replace_Hotel.empty()){
-                                    tour[index-1].setTripCost(Payment(hotelLogin[index-1],transportLogin[index-1])*tour[index-1].getNumberOfPeople());
-                                }
-                                else if(replace_Transport.empty() && !replace_Hotel.empty()){
-                                    tour[index-1].setTripCost(Payment(replace_Hotel,transportLogin[index-1])*tour[index-1].getNumberOfPeople());
-                                }
-                                else if(!replace_Transport.empty() && replace_Hotel.empty()){
-                                    tour[index-1].setTripCost(Payment(hotelLogin[index-1],replace_Transport)*tour[index-1].getNumberOfPeople());
-                                }
-                                else{
-                                    tour[index-1].setTripCost(Payment(replace_Hotel,replace_Transport)*tour[index-1].getNumberOfPeople());
-                                }                              
+                                tour[index-1].setTripCost(Payment(hotelLogin[index-1],transportLogin[index-1])*tour[index-1].getNumberOfPeople());
+                                // if(replace_Transport.empty() && replace_Hotel.empty()){
+                                //     tour[index-1].setTripCost(Payment(hotelLogin[index-1],transportLogin[index-1])*tour[index-1].getNumberOfPeople());
+                                // }
+                                // else if(replace_Transport.empty() && !replace_Hotel.empty()){
+                                //     tour[index-1].setTripCost(Payment(replace_Hotel,transportLogin[index-1])*tour[index-1].getNumberOfPeople());
+                                // }
+                                // else if(!replace_Transport.empty() && replace_Hotel.empty()){
+                                //     tour[index-1].setTripCost(Payment(hotelLogin[index-1],replace_Transport)*tour[index-1].getNumberOfPeople());
+                                // }
+                                // else{
+                                //     tour[index-1].setTripCost(Payment(replace_Hotel,replace_Transport)*tour[index-1].getNumberOfPeople());
+                                // }                              
                             }                                                     
                         }
                         else if(n2 == 5){
@@ -687,11 +670,6 @@ Transport AddTransport(vector<Transport> transportList){
             cout << "\n\t" << i << " - "; t.printTransport();
         }
     }
-    // for(int i = 0; i < transportList.size(); ++i){
-    //     if(transportList[i].getDeparturePlace() == NormalizeString(from) && transportList[i].getDestination() == NormalizeString(to)){
-    //         cout << "\n\t" << i << " - "; transportList[i].printTransport();
-    //     }
-    // }
     cout << "\nEnter number in range 1 - " << i << " : ";
     int id; cin >> id;    
     y = x[id-1];
