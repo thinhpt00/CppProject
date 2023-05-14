@@ -1,0 +1,3 @@
+Vietnam Airlines;Mh-370;Ha Noi;Tphcm;23-05-2023;2000;Ha Anh;Ha Noi;Single Room;12-5-2023;100;23-05-2023;23-05-2023;An Giang;Tay Ninh;5;3200;
+Bamboo Airways;Mk-333;Ha Noi;Ha Giang;23-05-2023;1900;Minh Cuong;Phu Quoc;Double Room;12-5-2023;1100;23-05-2023;23-05-2023;binh dinh;can tho;15;63500;
+Jetstar Pacific Airlines;Md-885;Ha Noi;An Giang;23-05-2023;2200;Muong Thanh;Thanh Hoa;Double Room;8-9-2023;1000;23-05-2023;23-05-2023;tay nguyen;quang ninh;15;7000;

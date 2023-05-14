@@ -30,6 +30,7 @@ void arrangeTrip(vector<Trip>& trip);
 vector<User> readUserInformationFromTextFile(const string& fileName);
 vector<Transport> readTransportInformationFromTextFile(const string& fileName);
 vector<Hotel> readHotelInformationFromTextFile(const string& fileName);
+vector<Trip> readTourInformationFromTextFile(const string& fileName);
 void saveUserInformationToTextFile(const string &filename, const vector<User> &user);
 void SaveTransportToTextFile(const string &filename, const vector<Transport> &transport);
 void SaveHotelToTextFile(const string &filename, const vector<Hotel> &hotel);
@@ -75,17 +76,14 @@ void SearchTransportByLocation(vector<Transport>& transportList);
 
 int main(){
     //user
-    vector<User> userList;
-    userList = readUserInformationFromTextFile("userData.txt");
+    vector<User> userList = readUserInformationFromTextFile("userData.txt");
     // Trip
-    vector<Trip> tripList;
+    vector<Trip> tripList = readTourInformationFromTextFile("tour.txt");
     map<string,vector<Trip>> booKing;
     // Transport
-    vector<Transport> transportList;
-    transportList = readTransportInformationFromTextFile("transport.txt");
+    vector<Transport> transportList = readTransportInformationFromTextFile("transport.txt");
     // Hotel
-    vector<Hotel> hotelList;
-    hotelList = readHotelInformationFromTextFile("hotel.txt");
+    vector<Hotel> hotelList = readHotelInformationFromTextFile("hotel.txt");
 
     int n = -1;
     do{
@@ -163,8 +161,9 @@ int main(){
         else if(n == 2){SignUp(userList);}
         else if(n == 3){SearchRoomByLocation(hotelList);}
         else if(n == 4){SearchTransportByLocation(transportList);}
-        else if(n == 5){arrangeTrip(tripList);}
-        else if(n == 6){
+        else if(n == 5){ViewTourInformation(tripList);}
+        else if(n == 6){arrangeTrip(tripList);}
+        else if(n == 7){
             
         }
 
@@ -180,8 +179,9 @@ int main(){
 
 void mainMenu(){
     cout << "\n\nMenu:";
-    cout << "\n\t6: Arrange Trip By Time";
-    cout << "\n\t5: Arrange Trip By Cost";
+    cout << "\n\t7: Arrange Trip By Time";
+    cout << "\n\t6: Arrange Trip By Cost";
+    cout << "\n\t5: List Tour Available";
     cout << "\n\t4: Search Transport By Location";
     cout << "\n\t3: Search Room By Location";   
     cout << "\n\t2: Sign up";
@@ -211,15 +211,23 @@ void AdminMenu(){
 void arrangeTrip(vector<Trip>& trip){
     int n; 
     do{
-        cout << "\nArrange Trip By Cost: ";
+        cout << "\nTour arrange By Cost: ";
         cout << "\n2: Decreasing";
         cout << "\n1: Increasing";
         cout << "\n0: Done";
         cout << "\nEnter number in range 0 - 2: ";
         cin >> n;
-        if(n == 1){sort(trip.begin(), trip.end(), increase);}
-        else if(n == 2){sort(trip.begin(), trip.end(), decrease);}
-    }while(n != 0);
+        if(n == 1){
+            sort(trip.begin(), trip.end(), increase);
+            cout << "\nTour arrange increasing: ";
+        }
+        else if(
+            n == 2){sort(trip.begin(), trip.end(), decrease);
+            cout << "\nTour arrange decreasing: ";
+        }
+        ViewTourInformation(trip);
+    }
+    while(n != 0);
 }
 vector<User> readUserInformationFromTextFile(const string& fileName){
     vector<User> x;
@@ -316,6 +324,52 @@ vector<Hotel> readHotelInformationFromTextFile(const string& fileName){
             hotel_.setStartDay(NormalizeString(s[3]));
             hotel_.setRoomPrice(stof(s[4]));
             x.push_back(hotel_);
+        }
+        file.close();
+    }
+    return x;
+}
+vector<Trip> readTourInformationFromTextFile(const string& fileName){
+    vector<Trip> x;
+    ifstream file(fileName);
+    if (file.is_open()) {
+        string data;
+        while(getline(file, data)){
+            stringstream ss(data);
+            vector<string> s;
+            string word;
+            while (getline(ss, word, ';')) {
+                s.push_back(word);
+            }
+            Trip tour;
+            vector<Transport> transport;
+            Transport transport_;
+            transport_.setTransportBrand(NormalizeString(s[0]));
+            transport_.setTransportName(NormalizeString(s[1]));
+            transport_.setDeparturePlace(NormalizeString(s[2]));
+            transport_.setDestination(NormalizeString(s[3]));
+            transport_.setDepartureDay(NormalizeString(s[4]));
+            transport_.setTicketPrice(stof(s[5]));
+            transport.push_back(transport_);
+
+            vector<Hotel> hotel;
+            Hotel hotel_;
+            hotel_.setHotelName(NormalizeString(s[6]));
+            hotel_.setHotelAddress(NormalizeString(s[7]));
+            hotel_.setRoomType(NormalizeString(s[8]));
+            hotel_.setStartDay(NormalizeString(s[9]));
+            hotel_.setRoomPrice(stof(s[10]));
+            hotel.push_back(hotel_);
+
+            tour.setTransportType(transport);
+            tour.setPlace(hotel);
+            tour.setFromDate(NormalizeString(s[11]));
+            tour.setToDate(NormalizeString(s[12]));
+            tour.setStartLocation(NormalizeString(s[13]));
+            tour.setEndLocation(NormalizeString(s[14]));
+            tour.setNumberOfPeople(stoi(s[15]));
+            tour.setTripCost(stof(s[16]));
+            x.push_back(tour);
         }
         file.close();
     }
@@ -526,6 +580,7 @@ void ViewTourInformation(vector<Trip>& tour){
         cout << "\nNO DATA";
     }
     else{
+        cout << "\n------------List Tour------------\n";
         for(auto& trip : tour){
             trip.printTrip();
         }
