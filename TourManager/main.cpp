@@ -38,6 +38,10 @@ void SaveHotelToTextFile(const string &filename, const vector<Hotel> &hotel);
 void AddTrip(Trip& trip);
 Hotel AddHotel(vector<Hotel>& hotelList);
 Transport AddTransport(vector<Transport> transportList);
+void DeleteTransport(vector<Transport> transportList);
+void DeleteHotel(vector<Hotel>& hotelList);
+
+
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword);
 void ViewTourInformation(vector<Trip>& tour);
 void EditTourInformation(vector<Hotel>& hotelList, vector<Transport> transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
@@ -94,12 +98,9 @@ int main(){
             cin.ignore();
         }
         if(n == 1){
-            //vector
             string loginName, loginPassword;
-            cout << "\nEnter username: ";
-            cin >> loginName;
-            cout << "\nEnter password: ";
-            cin >> loginPassword;
+            cout << "\nEnter username: "; cin >> loginName;
+            cout << "\nEnter password: "; cin >> loginPassword;
             // ADMIN
             if(loginName == adminAccountName && loginPassword == adminAccountPassword){
                 int n4;
@@ -355,7 +356,6 @@ Hotel AddHotel(vector<Hotel>& hotelList){
         // cin >> date;       
 
         for(auto& h : hotelList){
-            //cout << address << endl;
             if(h.getHotelAddress() == NormalizeString(address)){
                 x.push_back(h);
                 i++;
@@ -388,8 +388,6 @@ Transport AddTransport(vector<Transport> transportList){
         cout << "\nEnter to: ";
         getline(cin,to);
         for(auto& t : transportList){
-            cout << from << endl;
-            cout << to << endl;
             if(t.getDeparturePlace() == NormalizeString(from) && t.getDestination() == NormalizeString(to)){
                 x.push_back(t);
                 i++;
@@ -407,6 +405,38 @@ Transport AddTransport(vector<Transport> transportList){
     }
     while(x.empty());
     return y;
+}
+void DeleteTransport(vector<Transport> transportList){
+    if(transportList.empty()){
+        cout << "\n\tNO DATA";
+    }
+    else{
+        cout << "\nWhat transport do you want to delete? ";
+        int index; 
+        do{
+            cout << "\nEnter number in range (1 - " << transportList.size() << "): ";
+            cin >> index;
+        }
+        while(index < 0 || index > transportList.size());
+        transportList.erase(transportList.begin() + index - 1);
+        cout << "\n\t -> Delete successful!";
+    }     
+}
+void DeleteHotel(vector<Hotel>& hotelList){
+    if(hotelList.empty()){
+        cout << "\n\tNO DATA";
+    }
+    else{
+        cout << "\nWhat hotel do you want to delete? ";
+        int index; 
+        do{
+            cout << "\nEnter number in range (1 - " << hotelList.size() << "): ";
+            cin >> index;
+        }
+        while(index < 0 || index > hotelList.size());
+        hotelList.erase(hotelList.begin() + index - 1);
+        cout << "\n\t -> Delete successful!";
+    }   
 }
 
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword){
@@ -507,8 +537,12 @@ void EditTourInformation(vector<Hotel>& hotelList, vector<Transport> transportLi
     }
     else{
         cout << "\nWhat trip number do you want to edit? ";
-        cout << "\nEnter number in range (1 - " << tour.size() << "): ";
-        int index; cin >> index;
+        int index; 
+        do{
+            cout << "\nEnter number in range (1 - " << tour.size() << "): ";
+            cin >> index;
+        }
+        while(index < 0 || index > tour.size());
         int n3;
         do{
             cout << "\nWhat information do you want to edit? ";
@@ -525,24 +559,70 @@ void EditTourInformation(vector<Hotel>& hotelList, vector<Transport> transportLi
             if(n3 == 1){
                 cout << "\nThis is your list transport you booked: ";
                 ShowTransport(transportLogin[index-1]);
-                cout << "\nWhat transport number do you want to edit? ";
-                cout << "\nEnter number in range (1 - " << transportLogin[index-1].size() << "): ";
-                int id; cin >> id;
-                cout << "\n\tEnter new Transport: ";
-                transportLogin[index-1][id-1] = AddTransport(transportList);
-                tour[index-1].setTransportType(transportLogin[index-1]);
+                int n4;
+                do{
+                    cout << "\nWhat do you want ?";
+                    cout << "\n\t1: Add new";
+                    cout << "\n\t2: Edit";
+                    cout << "\n\t3: Delete";
+                    cout << "\n\t0: Done";
+                    cout << "\nEnter number in range (0-3): ";
+                    cin >> n4;
+                    if(n4 == 1){
+                        cout << "\n\tAdd new Transport: ";
+                        transportLogin[index-1].push_back(AddTransport(transportList));
+                        cout << "\n\t -> Add successful!!";
+                    }
+                    else if(n4 == 2){
+                        cout << "\nWhat transport number do you want to edit? ";
+                        int id; 
+                        do{
+                            cout << "\nEnter number in range (1 - " << transportLogin[index-1].size() << "): ";
+                            cin >> id;
+                        }
+                        while(id < 0 || id > transportLogin[index-1].size());
+                        cout << "\n\tEnter new Transport: ";
+                        transportLogin[index-1][id-1] = AddTransport(transportList);
+                        cout << "\n\t -> Edit successful!!";
+                    }
+                    else if(n4 == 3){DeleteTransport(transportLogin[index-1]);}
+                    tour[index-1].setTransportType(transportLogin[index-1]);
+                }
+                while(n4 != 0);                                
             }                                        
             else if(n3 == 2){
                 cout << "\nThis is your list hotel you booked: ";
                 ShowHotel(hotelLogin[index-1]);
-                cout << "\nWhat hotel number do you want to edit? ";
-                cout << "\nEnter number in range (1 - " << hotelLogin[index-1].size() << "): ";
-                int id; cin >> id;
-                cout << "\n\tEnter new Hotel: ";
-                hotelLogin[index-1][id-1] = AddHotel(hotelList);
-                tour[index-1].setPlace(hotelLogin[index-1]);
-                // replace_Hotel = hotelLogin[index-1];
-                // tour[index-1].setPlace(replace_Hotel);
+                int n4;
+                do{
+                    cout << "\nWhat do you want ?";
+                    cout << "\n\t1: Add new";
+                    cout << "\n\t2: Edit";
+                    cout << "\n\t3: Delete";
+                    cout << "\n\t0: Done";
+                    cout << "\nEnter number in range (0-3): ";
+                    cin >> n4;
+                    if(n4 == 1){
+                        cout << "\n\tAdd new Transport: ";
+                        hotelLogin[index-1].push_back(AddHotel(hotelList));
+                        cout << "\n\t -> Add successful!!";
+                    }
+                    else if(n4 == 2){
+                        cout << "\nWhat hotel number do you want to edit? ";
+                        int id; 
+                        do{
+                            cout << "\nEnter number in range (1 - " << hotelLogin[index-1].size() << "): ";
+                            cin >> id;
+                        }
+                        while(id < 0 || id > hotelLogin[index-1].size());
+                        cout << "\n\tEnter new Hotel: ";
+                        hotelLogin[index-1][id-1] = AddHotel(hotelList);
+                        cout << "\n\t -> Edit successful!!";
+                    }
+                    else if(n4 == 3){DeleteHotel(hotelLogin[index-1]);}
+                    tour[index-1].setPlace(hotelLogin[index-1]);
+                }
+                while(n4 != 0);
             }
             else if(n3 == 3){
                 cout << "\nEnter new Start Day: ";
@@ -574,8 +654,8 @@ void EditTourInformation(vector<Hotel>& hotelList, vector<Transport> transportLi
             }
             else if(n3 == 7){
                 cout << "\nEnter new Number of people: ";
-                int n; cin >> n;
-                tour[index - 1].setNumberOfPeople(n);
+                int num; cin >> num;
+                tour[index - 1].setNumberOfPeople(num);
             }
         }
         while(n3 != 0);
@@ -814,17 +894,7 @@ void AdminManageTransport(vector<Transport>& transportList){
         cin >> n6;
         if(n6 == 1){ShowTransport(transportList);}
         else if(n6 == 2){AddNewTransport(transportList);}
-        else if(n6 == 3){
-            cout << "\nWhat transport do you want to delete? ";
-            int index; 
-            do{
-                cout << "\nEnter number in range (1 - " << transportList.size() << "): ";
-                cin >> index;
-            }
-            while(index < 0 || index > transportList.size());
-            transportList.erase(transportList.begin() + index - 1);
-            cout << "\n\t -> Delete successful!";
-        }     
+        else if(n6 == 3){DeleteTransport(transportList);}     
     }
     while(n6 != 0);
 }
@@ -840,16 +910,16 @@ void AdminManageHotel(vector<Hotel>& hotelList){
         cin >> n6;
         if(n6 == 1){ShowHotel(hotelList);}
         else if(n6 == 2){AddNewHotel(hotelList);}
-        else if(n6 == 3){
-            cout << "\nWhat hotel do you want to delete? ";
-            int index; 
-            do{
-                cout << "\nEnter number in range (1 - " << hotelList.size() << "): ";
-                cin >> index;
-            }
-            while(index < 0 || index > hotelList.size());
-            hotelList.erase(hotelList.begin() + index - 1);
-            cout << "\n\t -> Delete successful!";
+        else if(n6 == 3){DeleteHotel(hotelList);
+            // cout << "\nWhat hotel do you want to delete? ";
+            // int index; 
+            // do{
+            //     cout << "\nEnter number in range (1 - " << hotelList.size() << "): ";
+            //     cin >> index;
+            // }
+            // while(index < 0 || index > hotelList.size());
+            // hotelList.erase(hotelList.begin() + index - 1);
+            // cout << "\n\t -> Delete successful!";
         }                                         
     }  
     while(n6 != 0);
