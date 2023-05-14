@@ -38,18 +38,22 @@ void SaveHotelToTextFile(const string &filename, const vector<Hotel> &hotel);
     // User
 void AddTrip(Trip& trip);
 Hotel AddHotel(vector<Hotel>& hotelList);
-Transport AddTransport(vector<Transport> transportList);
-void DeleteTransport(vector<Transport> transportList);
+Transport AddTransport(vector<Transport>& transportList);
+void DeleteTransport(vector<Transport>& transportList);
 void DeleteHotel(vector<Hotel>& hotelList);
 
 
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword);
 void ViewTourInformation(vector<Trip>& tour);
-void EditTourInformation(vector<Hotel>& hotelList, vector<Transport> transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-void AddTourInformation(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT, vector<Hotel>& hotelList, vector<Transport> transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+// void AddTourFromKeyboard(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT, vector<Hotel>& hotelList, vector<Transport> transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+Trip AddTourFromKeyboard(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+Trip AddAvailableTour(vector<Trip>& tripList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+void AddTourInformation(vector<Trip>& tour, vector<Trip>& tripList, vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+
 
 // Tính tiền chuyến đi
-float Payment(vector<Hotel>& HOTEL, vector<Transport> TRANSPORT);
+float Payment(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT);
 //
 void CancelTourHandles(vector<Trip>& tour);
 
@@ -65,7 +69,7 @@ void AddNewHotel(vector<Hotel>& hotelList);
 void AddNewTransport(vector<Transport>& transportList);
 void AdminManageTransport(vector<Transport>& transportList);
 void AdminManageHotel(vector<Hotel>& hotelList);
-void AdminManageService(vector<Hotel>& hotelList, vector<Transport> transportList);
+void AdminManageService(vector<Hotel>& hotelList, vector<Transport>& transportList);
 
 // Sign Up
 void SignUp(vector<User>& userList);
@@ -144,10 +148,11 @@ int main(){
                     do{
                         UserMenu();
                         cin >> n2;
-                        vector<Hotel> HOTEL;
-                        vector<Transport> TRANSPORT;
+                        // vector<Hotel> HOTEL;
+                        // vector<Transport> TRANSPORT;
+                        // Trip trip;
                         if(n2 == 0){break;}
-                        else if(n2 == 1){AddTourInformation(HOTEL,TRANSPORT,hotelList,transportList,tour,hotelLogin,transportLogin);}
+                        else if(n2 == 1){AddTourInformation(tour,tripList,hotelList,transportList,hotelLogin,transportLogin);}
                         else if(n2 == 2){EditPersonalInformation(userList,loginName,loginPassword);}
                         else if(n2 == 3){ViewTourInformation(tour);}
                         else if(n2 == 4){EditTourInformation(hotelList,transportList,tour,hotelLogin,transportLogin);}
@@ -187,7 +192,7 @@ void mainMenu(){
     cout << "\n\t2: Sign up";
     cout << "\n\t1: Log in";
     cout << "\n\t0: Exit";
-    cout << "\n\nEnter number in range 0 - 6: "; 
+    cout << "\n\nEnter number in range 0 - 7: "; 
 }
 void UserMenu(){
     cout << "\nHello, User!\nWhat do you want?";
@@ -375,6 +380,7 @@ vector<Trip> readTourInformationFromTextFile(const string& fileName){
     }
     return x;
 }
+
 void AddTrip(Trip& trip){
     string str1,str2,str3,str4;
     int numPeople;
@@ -428,7 +434,7 @@ Hotel AddHotel(vector<Hotel>& hotelList){
     while(x.empty());
     return y;
 }
-Transport AddTransport(vector<Transport> transportList){
+Transport AddTransport(vector<Transport>& transportList){
     Transport y;
     vector<Transport> x;
     string from,to,day;
@@ -460,7 +466,7 @@ Transport AddTransport(vector<Transport> transportList){
     while(x.empty());
     return y;
 }
-void DeleteTransport(vector<Transport> transportList){
+void DeleteTransport(vector<Transport>& transportList){
     if(transportList.empty()){
         cout << "\n\tNO DATA";
     }
@@ -549,8 +555,36 @@ void EditPersonalInformation(vector<User>& userList,string& loginName, string& l
         }                                
     }while(n3 != 0);
 }
-void AddTourInformation(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT, vector<Hotel>& hotelList, vector<Transport> transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){
+// void AddTourFromKeyboard(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT, vector<Hotel>& hotelList, vector<Transport> transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){
+//     Trip trip;
+//     AddTrip(trip);
+//     int n5;
+//     do{
+//         cout << "\nEnter Service: ";
+//         cout << "\n\t1: Add Hotel";
+//         cout << "\n\t2: Add Transport";
+//         cout << "\n\t0: Done";
+//         cout << "\nEnter number in range (0 - 2): ";
+//         cin >> n5;
+//         if(n5 == 1){
+//             HOTEL.push_back(AddHotel(hotelList));
+//         }
+//         else if( n5 == 2){
+//             TRANSPORT.push_back(AddTransport(transportList));
+//         }
+//     }
+//     while(n5 != 0);
+//     hotelLogin.push_back(HOTEL);
+//     transportLogin.push_back(TRANSPORT);
+//     trip.setPlace(HOTEL);
+//     trip.setTransportType(TRANSPORT);
+//     trip.setTripCost(Payment(HOTEL,TRANSPORT)*trip.getNumberOfPeople());
+//     tour.push_back(trip);
+// }
+Trip AddTourFromKeyboard(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){
     Trip trip;
+    vector<Hotel> HOTEL; 
+    vector<Transport> TRANSPORT; 
     AddTrip(trip);
     int n5;
     do{
@@ -573,8 +607,38 @@ void AddTourInformation(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT, vect
     trip.setPlace(HOTEL);
     trip.setTransportType(TRANSPORT);
     trip.setTripCost(Payment(HOTEL,TRANSPORT)*trip.getNumberOfPeople());
-    tour.push_back(trip);
+    
+    return trip;
 }
+Trip AddAvailableTour(vector<Trip>& tripList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){
+    ViewTourInformation(tripList);
+    // Trip tour;
+    cout << "\nWhich tour do you want to add? ";
+    int index; 
+    do{
+        cout << "\n\tEnter tour you want to add (1 - " << tripList.size() << "): ";
+        cin >> index;
+    }
+    while(index < 0 || index > tripList.size());
+    // tour.push_back(tripList[index-1]);
+    hotelLogin.push_back(tripList[index-1].getPlace());
+    transportLogin.push_back(tripList[index-1].getTransportType());
+    return tripList[index-1];
+}
+void AddTourInformation(vector<Trip>& tour, vector<Trip>& tripList, vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){   
+    int n3;
+    do{
+        cout << "\nWhat do you want to add? ";
+        cout << "\n\t1: Add available tour ";
+        cout << "\n\t2: Add tour from keyboard ";
+        cout << "\n\t0: Done ";
+        cin >> n3;
+        if(n3 == 1){tour.push_back(AddAvailableTour(tripList,hotelLogin,transportLogin));}
+        else if(n3 == 2){tour.push_back(AddTourFromKeyboard(hotelList,transportList,hotelLogin,transportLogin));}
+    }
+    while(n3 != 0);
+}
+
 void ViewTourInformation(vector<Trip>& tour){
     if(tour.empty()){
         cout << "\nNO DATA";
@@ -586,7 +650,7 @@ void ViewTourInformation(vector<Trip>& tour){
         }
     }
 }
-void EditTourInformation(vector<Hotel>& hotelList, vector<Transport> transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){
+void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){
     if(tour.empty()){
         cout << "\nNO DATA";
     }
@@ -718,23 +782,32 @@ void EditTourInformation(vector<Hotel>& hotelList, vector<Transport> transportLi
     }
 }
 void CancelTourHandles(vector<Trip>& tour){
-    int cancel;
+    // int cancel;
     if(tour.empty()){
         cout << "\nNO DATA ABOUT TOUR!!";
     }
     else{
+        cout << "\nWhich tour do you want to delete? ";
+        int index; 
         do{
-            cout << "\n1: Cancel trip";
-            cout << "\n0: Done";
-            cout << "\nEnter number in range (0 - 1): ";
-            cin >> cancel;
-            if(cancel == 1){
-                cout << "\n\tEnter trip you want to cancel (1 - " << tour.size() << "): ";
-                int cancel_trip;
-                cin >> cancel_trip;
-                tour.erase(tour.begin() + cancel_trip - 1);
-            }
-        }while(cancel != 0);
+            cout << "\nEnter number in range (1 - " << tour.size() << "): ";
+            cin >> index;
+        }
+        while(index < 0 || index > tour.size());
+        tour.erase(tour.begin() + index - 1);
+        cout << "\n\t -> Delete successful!";
+        // do{
+        //     cout << "\n1: Cancel trip";
+        //     cout << "\n0: Done";
+        //     cout << "\nEnter number in range (0 - 1): ";
+        //     cin >> cancel;
+        //     if(cancel == 1){
+        //         cout << "\n\tEnter trip you want to cancel (1 - " << tour.size() << "): ";
+        //         int cancel_trip;
+        //         cin >> cancel_trip;
+        //         tour.erase(tour.begin() + cancel_trip - 1);
+        //     }
+        // }while(cancel != 0);
     }    
 }
 
@@ -965,21 +1038,11 @@ void AdminManageHotel(vector<Hotel>& hotelList){
         cin >> n6;
         if(n6 == 1){ShowHotel(hotelList);}
         else if(n6 == 2){AddNewHotel(hotelList);}
-        else if(n6 == 3){DeleteHotel(hotelList);
-            // cout << "\nWhat hotel do you want to delete? ";
-            // int index; 
-            // do{
-            //     cout << "\nEnter number in range (1 - " << hotelList.size() << "): ";
-            //     cin >> index;
-            // }
-            // while(index < 0 || index > hotelList.size());
-            // hotelList.erase(hotelList.begin() + index - 1);
-            // cout << "\n\t -> Delete successful!";
-        }                                         
+        else if(n6 == 3){DeleteHotel(hotelList);}                                         
     }  
     while(n6 != 0);
 }
-void AdminManageService(vector<Hotel>& hotelList, vector<Transport> transportList){
+void AdminManageService(vector<Hotel>& hotelList, vector<Transport>& transportList){
     int n5;
     do{
         cout << "\n*** Service Information ***";
@@ -1066,7 +1129,7 @@ void ShowHotel(vector<Hotel> &hotel){
        cout << "\n\t" << i << " - "; t.printHotel();
     }    
 }
-float Payment(vector<Hotel>& HOTEL, vector<Transport> TRANSPORT){
+float Payment(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT){
     float trip_cost;
     float hotel_cost = 0;
     float transport_cost = 0;
