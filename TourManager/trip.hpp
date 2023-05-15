@@ -1,10 +1,11 @@
 #ifndef __TRIP__
 #define __TRIP__
 
+// #include "Header.hpp"
 #include "transport.hpp"
 #include "hotel.hpp"
-#include <algorithm>
-#include <vector>
+// #include <algorithm>
+// #include <vector>
 
 class Trip{
 private:

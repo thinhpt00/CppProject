@@ -1,11 +1,11 @@
 #ifndef __HOTEL__
 #define __HOTEL__
 
-//#include "date.hpp"
-//#include <vector>
-#include <string>
 
-using namespace std;
+//#include <vector>
+// #include <string>
+#include "Header.hpp"
+// using namespace std;
 
 class Hotel{
 private:
