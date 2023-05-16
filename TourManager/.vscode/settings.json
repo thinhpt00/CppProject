@@ -50,6 +50,7 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "format": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "chrono": "cpp"
     }
 }

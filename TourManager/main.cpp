@@ -2,13 +2,14 @@
 const string adminAccountName = "admin";
 const string adminAccountPassword = "111";
 
-int main(){    
+int main(){
+    
     vector<Transport> transportList = readTransportInformationFromTextFile("Data//transport.txt");
     vector<Hotel> hotelList = readHotelInformationFromTextFile("Data//hotel.txt");
     vector<User> userList = readUserInformationFromTextFile("Data//userData.txt");
     vector<Trip> tripList = ReadTourInformationFromTextFile("Data//tour.txt");
     map<string,vector<Trip>> booKing;
-    vector<Account> accountList;
+    vector<Account> accountList = ReadAccountInformationFromTextFile("Data//account.txt");
 
     int n = -1;
     do{
@@ -26,15 +27,33 @@ int main(){
             cout << "\nEnter password: "; cin >> loginPassword;
             // ADMIN
             if(loginName == adminAccountName && loginPassword == adminAccountPassword){
-                int n1;
+                int n4;
                 do{
                     AdminMenu();
-                    cin >> n1;
-                    if(n1 == 1){AdminManageUserAccount(accountList,userList);}                   
-                    else if(n1 == 2){AdminManageService(hotelList,transportList);}
-                    else if(n1 == 3){AdminManageSystemData(userList,transportList,hotelList,tripList,accountList);}
-                }
-                while(n1 != 0);                
+                    cin >> n4;
+                    if(n4 == 1){AdminManageUserAccount(accountList,userList);}                   
+                    else if(n4 == 2){AdminManageService(hotelList,transportList);}
+                    else if(n4 == 3){
+                        int n5;
+                        do{
+                            cout << "\n\t1: Save System Data";
+                            cout << "\n\t2: Load System Data";  
+                            cout << "\n\t0: Done";
+                            cout << "\nEnter number in range 0 - 2: ";
+                            cin >> n5;
+                            if(n5 == 1){
+                                SaveSystemData(userList,transportList,hotelList,tripList,accountList);
+                                cout << "Save System Data Successful!!";
+                            }
+                            else if(n5 == 2){
+                                // accountList = ReadAccountInformationFromTextFile("Data//account.txt");
+                                LoadSystemData(userList,transportList,hotelList,tripList,accountList);
+                                cout << "Load System Data Successful!!";
+                            }       
+                        }
+                        while(n5 != 0); 
+                    }
+                }while(n4 != 0);                
             }
             // USER
             else{
@@ -51,32 +70,34 @@ int main(){
                     cout << "\nLogin failed!";
                 }
                 else{
-                    // vector<Trip> tour;
-                    // vector<vector<Hotel>> hotelLogin;
-                    // vector<vector<Transport>> transportLogin;
+                    
+                    vector<Trip> tour;
+                    vector<vector<Hotel>> hotelLogin;
+                    vector<vector<Transport>> transportLogin;
+                    for(auto& a : accountList){
+                        if(a.getUserAccount().getAccountName() == loginName){
+                            tour = a.getTourOfCLient();
+                        }
+                    }
+                    for(auto& t : tour){
+                        hotelLogin.push_back(t.getPlace());
+                        transportLogin.push_back(t.getTransportType());
+                    }
                     int n2; 
                     do{
                         UserMenu();
                         cin >> n2;
-                        if(n2 == 1){
-                            AddTourInformation(acc,tripList,hotelList,transportList);
-                            accountList.push_back(acc);
-                            // AddTourInformation(tour,tripList,hotelList,transportList,hotelLogin,transportLogin);
-                        }
+                        if(n2 == 1){AddTourInformation(tour,tripList,hotelList,transportList,hotelLogin,transportLogin);}
                         else if(n2 == 2){EditPersonalInformation(userList,loginName,loginPassword);}
-                        else if(n2 == 3){ViewTourInformation(acc.getTourOfCLient());}
-                        else if(n2 == 4){
-                            EditTourInformation(acc,hotelList,transportList);
-                            // EditTourInformation(hotelList,transportList,tour,hotelLogin,transportLogin);
-                        }
-                        else if(n2 == 5){DeleteElementInVector<Trip>(move(acc.getTourOfCLient()),"tour");}
-                        SaveAccountToTextFile("BackUpData//BackUpAccount.txt",accountList);
+                        else if(n2 == 3){ViewTourInformation(tour);}
+                        else if(n2 == 4){EditTourInformation(hotelList,transportList,tour,hotelLogin,transportLogin);}
+                        else if(n2 == 5){DeleteElementInVector<Trip>(tour,"tour");}
                     }
                     while(n2!=0);
-                    // acc.setTourOfCLient(tour);
-                    // accountList.push_back(acc);
-                    SaveAccountToTextFile("BackUpData//BackUpAccount.txt",accountList);
-                    // booKing[loginName] = tour;
+                    acc.setTourOfCLient(tour);
+                    accountList.push_back(acc);
+                    SaveAccountToTextFile("Data//account.txt",accountList);
+                    booKing[loginName] = tour;
                 }
             }
         }

@@ -1,7 +1,16 @@
 #ifndef __CLASS__
 #define __CLASS__
 
-#include "Header.hpp"
+// #include "Header.hpp"
+#include<iostream>
+#include<string>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <vector>
+#include <algorithm>
+#include <cctype>
+using namespace std;
 
 class Hotel{
 private:

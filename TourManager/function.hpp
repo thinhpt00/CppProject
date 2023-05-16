@@ -2,17 +2,16 @@
 #define __FUNCTION__
 
 // #include "Header.hpp"
-// #include "account.hpp"
 #include "class.hpp"
+
 // const string adminAccountName = "admin";
 // const string adminAccountPassword = "111";
 
 // Template Delete function
 template <class T>
-void DeleteElementInVector(vector<T>&& type, string s){
-    
+void DeleteElementInVector(vector<T>& type, string s){
     if(type.empty()){
-        cout << "\n\tNO DATA";
+        cout << "\n\tNO DATA ABOUT " << s << "!!\n";
     }
     else{
         cout << "\nWhat " << s << " do you want to delete? ";
@@ -27,8 +26,8 @@ void DeleteElementInVector(vector<T>&& type, string s){
     }     
 }
 //
-void ShowTransport(const vector<Transport>& transport);
-void ShowHotel(const vector<Hotel>& hotel);
+void ShowTransport(vector<Transport> &transport);
+void ShowHotel(vector<Hotel> &hotel);
 // Chuẩn hóa dữ liệu nhập vào từ bàn phím
 string NormalizeString(const string& str);
 // Check điều kiện password
@@ -63,18 +62,17 @@ Hotel AddHotel(vector<Hotel>& hotelList);
 Transport AddTransport(vector<Transport>& transportList);
 
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword);
-void ViewTourInformation(const vector<Trip>& tour);
-// void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-void EditTourInformation(Account& acc, vector<Hotel>& hotelList, vector<Transport>& transportList);
-// Trip AddTourFromKeyboard(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-// Trip AddAvailableTour(vector<Trip>& tripList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-// void AddTourInformation(vector<Trip>& tour, vector<Trip>& tripList, vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-void AddTourInformation(Account& acc, vector<Trip>& tripList, vector<Hotel>& hotelList, vector<Transport>& transportList);
+void ViewTourInformation(vector<Trip>& tour);
+void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+Trip AddTourFromKeyboard(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+Trip AddAvailableTour(vector<Trip>& tripList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+void AddTourInformation(vector<Trip>& tour, vector<Trip>& tripList, vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+
 
 // Tính tiền chuyến đi
-float Payment(const vector<Hotel>& HOTEL,const vector<Transport>& TRANSPORT);
+float Payment(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT);
 //
-void CancelTourHandles(vector<Trip>& tour);
+// void CancelTourHandles(vector<Trip>& tour);
 
     // Admin
         // 1
@@ -82,6 +80,7 @@ void ViewListUserAccount(vector<User>& userList);
 // void DeleteUserAccount(map<string,vector<Trip>>& booKing, vector<User>& userList);
 void DeleteUserAccount(vector<Account>& accountList, vector<User>& userList);
 void EditUserAccount(vector<User>& userList);
+// void AdminManageUserAccount(map<string,vector<Trip>>& booKing, vector<User>& userList);
 void AdminManageUserAccount(vector<Account>& accountList, vector<User>& userList);
 
         // 2
@@ -95,7 +94,6 @@ void AdminManageService(vector<Hotel>& hotelList, vector<Transport>& transportLi
 // void LoadSystemData();
 void SaveSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList);
 void LoadSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList);
-void AdminManageSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList);
 
 // Sign Up
 void SignUp(vector<User>& userList);
