@@ -1,16 +1,16 @@
 #ifndef __FUNCTION__
 #define __FUNCTION__
 
-#include "Header.hpp"
-#include "account.hpp"
-
+// #include "Header.hpp"
+// #include "account.hpp"
+#include "class.hpp"
 // const string adminAccountName = "admin";
 // const string adminAccountPassword = "111";
-vector<Trip> read(const string& fileName);
-void SaveTourToTextFile(const string &filename, const vector<Trip> &trip);
+
 // Template Delete function
 template <class T>
-void DeleteElementInVector(vector<T>& type, string s){
+void DeleteElementInVector(vector<T>&& type, string s){
+    
     if(type.empty()){
         cout << "\n\tNO DATA";
     }
@@ -27,8 +27,8 @@ void DeleteElementInVector(vector<T>& type, string s){
     }     
 }
 //
-void ShowTransport(vector<Transport> &transport);
-void ShowHotel(vector<Hotel> &hotel);
+void ShowTransport(const vector<Transport>& transport);
+void ShowHotel(const vector<Hotel>& hotel);
 // Chuẩn hóa dữ liệu nhập vào từ bàn phím
 string NormalizeString(const string& str);
 // Check điều kiện password
@@ -47,7 +47,12 @@ void arrangeTrip(vector<Trip>& trip);
 vector<User> readUserInformationFromTextFile(const string& fileName);
 vector<Transport> readTransportInformationFromTextFile(const string& fileName);
 vector<Hotel> readHotelInformationFromTextFile(const string& fileName);
-vector<Trip> readTourInformationFromTextFile(const string& fileName);
+vector<Trip> ReadTourInformationFromTextFile(const string& fileName);
+vector<Account> ReadAccountInformationFromTextFile(const string& fileName);
+
+void SaveAccountToTextFile(const string &filename, const vector<Account> &account);
+void SaveTourToTextFile(const string &filename, const vector<Trip> &trip);
+// vector<Trip> readTourInformationFromTextFile(const string& fileName);
 void SaveUserInformationToTextFile(const string &filename, const vector<User> &user);
 void SaveTransportToTextFile(const string &filename, const vector<Transport> &transport);
 void SaveHotelToTextFile(const string &filename, const vector<Hotel> &hotel);
@@ -56,30 +61,28 @@ void SaveHotelToTextFile(const string &filename, const vector<Hotel> &hotel);
 void AddTrip(Trip& trip);
 Hotel AddHotel(vector<Hotel>& hotelList);
 Transport AddTransport(vector<Transport>& transportList);
-// void DeleteTransport(vector<Transport>& transportList);
-// void DeleteHotel(vector<Hotel>& hotelList);
-
 
 void EditPersonalInformation(vector<User>& userList,string& loginName, string& loginPassword);
-void ViewTourInformation(vector<Trip>& tour);
-void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-// void AddTourFromKeyboard(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT, vector<Hotel>& hotelList, vector<Transport> transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-Trip AddTourFromKeyboard(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-Trip AddAvailableTour(vector<Trip>& tripList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-void AddTourInformation(vector<Trip>& tour, vector<Trip>& tripList, vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
-
+void ViewTourInformation(const vector<Trip>& tour);
+// void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+void EditTourInformation(Account& acc, vector<Hotel>& hotelList, vector<Transport>& transportList);
+// Trip AddTourFromKeyboard(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+// Trip AddAvailableTour(vector<Trip>& tripList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+// void AddTourInformation(vector<Trip>& tour, vector<Trip>& tripList, vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin);
+void AddTourInformation(Account& acc, vector<Trip>& tripList, vector<Hotel>& hotelList, vector<Transport>& transportList);
 
 // Tính tiền chuyến đi
-float Payment(vector<Hotel>& HOTEL, vector<Transport>& TRANSPORT);
+float Payment(const vector<Hotel>& HOTEL,const vector<Transport>& TRANSPORT);
 //
 void CancelTourHandles(vector<Trip>& tour);
 
     // Admin
         // 1
 void ViewListUserAccount(vector<User>& userList);
-void DeleteUserAccount(map<string,vector<Trip>>& booKing, vector<User>& userList);
+// void DeleteUserAccount(map<string,vector<Trip>>& booKing, vector<User>& userList);
+void DeleteUserAccount(vector<Account>& accountList, vector<User>& userList);
 void EditUserAccount(vector<User>& userList);
-void AdminManageUserAccount(map<string,vector<Trip>>& booKing, vector<User>& userList);
+void AdminManageUserAccount(vector<Account>& accountList, vector<User>& userList);
 
         // 2
 void AddNewHotel(vector<Hotel>& hotelList);
@@ -87,6 +90,12 @@ void AddNewTransport(vector<Transport>& transportList);
 void AdminManageTransport(vector<Transport>& transportList);
 void AdminManageHotel(vector<Hotel>& hotelList);
 void AdminManageService(vector<Hotel>& hotelList, vector<Transport>& transportList);
+
+        // 3
+// void LoadSystemData();
+void SaveSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList);
+void LoadSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList);
+void AdminManageSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList);
 
 // Sign Up
 void SignUp(vector<User>& userList);
