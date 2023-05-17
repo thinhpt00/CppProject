@@ -1,56 +1,75 @@
 #include "function.hpp"
 
 void mainMenu(){
-    cout << "\n\nMenu:";
-    cout << "\n\t6: Arrange Tour";
-    cout << "\n\t5: List Tour Available";
-    cout << "\n\t4: Search Transport By Location";
-    cout << "\n\t3: Search Room By Location";   
+    cout << "\n\nMenu:"; 
     cout << "\n\t2: Sign up";
     cout << "\n\t1: Log in";
     cout << "\n\t0: Exit";
-    cout << "\n\nEnter number in range 0 - 6: "; 
+    cout << "\nEnter number in range 0 - 2: "; 
+}
+void TourInformationService(){
+    cout << "\n\nWhat do you want?";
+    cout << "\n\t1: Available Service";
+    cout << "\n\t2: Book Tour";
+    cout << "\n\t0: Done";
+    cout << "\nEnter number in range 0 - 2: ";
+}
+void AvaiableService(){
+    cout << "\n\nWhat do you want?";
+    cout << "\n\t1: List Tour Available";
+    cout << "\n\t2: Search Transport By Location";
+    cout << "\n\t3: Search Room By Location";
+    cout << "\n\t0: Done";
+    cout << "\nEnter number in range 0 - 3: ";  
+}
+void BookTourMenu(){    
+    cout << "\n\nWhat do you want?";
+    cout << "\n\t1: Add Tour";    
+    cout << "\n\t2: View Booked Tour";
+    cout << "\n\t3: Edit Booked Tour";
+    cout << "\n\t4: Cancel Booked Tour";
+    cout << "\n\t0: Done";
+    cout << "\nEnter number in range 0 - 4: ";
 }
 void UserMenu(){
     cout << "\nHello, User!\nWhat do you want?";
-    cout << "\n\t1: Add Tour Information";
-    cout << "\n\t2: Edit Personal Information";
-    cout << "\n\t3: View Trip Information";
-    cout << "\n\t4: Edit Trip Information";
-    cout << "\n\t5: Cancel Trip Handles";
-    cout << "\n\t0: Done";
-    cout << "\nEnter number in range 0 - 5: ";
+    cout << "\n\t2: Tour Information Service";
+    cout << "\n\t1: Edit Personal Information";
+    cout << "\n\t0: Log Out";
+    cout << "\nEnter number in range 0 - 2: ";
 }
 void AdminMenu(){
     cout << "\nHello, Admin!\nWhat do you want?";
     cout << "\n\t1: User Account";   
     cout << "\n\t2: Service Information";
     cout << "\n\t3: System Data";
-    cout << "\n\t0: Done";
+    cout << "\n\t0: Log Out";
     cout << "\nEnter number in range 0 - 3: ";
 }
 bool increase(Trip a, Trip b){return a < b;}
 bool decrease(Trip a, Trip b){return a > b;}
 void arrangeTrip(vector<Trip>& trip){
     int n; 
-    do{
-        cout << "\nTour arrange By Cost: ";
-        cout << "\n2: Decreasing";
-        cout << "\n1: Increasing";
-        cout << "\n0: Done";
-        cout << "\nEnter number in range 0 - 2: ";
-        cin >> n;
-        if(n == 1){
-            sort(trip.begin(), trip.end(), increase);
-            cout << "\nTour arrange increasing: ";
-        }
-        else if(
-            n == 2){sort(trip.begin(), trip.end(), decrease);
-            cout << "\nTour arrange decreasing: ";
-        }
-        ViewTourInformation(trip);
+    cout << "\n\nWhich order do you want?  ";
+    cout << "\n2: Decreasing";
+    cout << "\n1: Increasing";
+    cout << "\n0: Done";
+    cout << "\nEnter number in range 0 - 2: ";
+    cin >> n;
+    if(n == 1){
+        sort(trip.begin(), trip.end(), increase);
+        cout << "\nTour arrange increasing: ";
     }
-    while(n != 0);
+    else if(n == 2){
+        sort(trip.begin(), trip.end(), decrease);
+        cout << "\nTour arrange decreasing: ";
+    }
+    int i = 0;
+    cout << "\n------------List Tour------------\n";
+    for(auto& t : trip){
+        i++;
+        cout << endl << i << "."; t.printTrip();
+    }
 }
 
 vector<User> readUserInformationFromTextFile(const string& fileName){
@@ -270,7 +289,6 @@ vector<Account> ReadAccountInformationFromTextFile(const string& fileName){
     return x;
 }
 
-
 void SaveUserInformationToTextFile(const string &filename, const vector<User> &user){
     ofstream file(filename);
     if (file.is_open()){
@@ -340,28 +358,47 @@ void SaveAccountToTextFile(const string &filename, const vector<Account> &accoun
 }
 
 void LoadSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList){
-    transportList = readTransportInformationFromTextFile("BackUpData//BackUpTransport.txt");
-    hotelList = readHotelInformationFromTextFile("BackUpData//BackUpHotel.txt");
-    userList = readUserInformationFromTextFile("BackUpData//BackUpUserData.txt");
-    tripList = ReadTourInformationFromTextFile("BackUpData//BackUpTour.txt");
-    accountList = ReadAccountInformationFromTextFile("BackUpData//BackUpAccount.txt");
-    SaveUserInformationToTextFile("Data//userData.txt",userList);
-    SaveTransportToTextFile("Data//transport.txt", transportList);
-    SaveHotelToTextFile("Data//hotel.txt", hotelList);
-    SaveTourToTextFile("Data//tour.txt", tripList);
-    SaveAccountToTextFile("Data//account.txt",accountList);
+    SaveUserInformationToTextFile("Data//userData.txt",readUserInformationFromTextFile("BackUpData//BackUpUserData.txt"));
+    SaveTransportToTextFile("Data//transport.txt", readTransportInformationFromTextFile("BackUpData//BackUpTransport.txt"));
+    SaveHotelToTextFile("Data//hotel.txt", readHotelInformationFromTextFile("BackUpData//BackUpHotel.txt"));
+    SaveTourToTextFile("Data//tour.txt", ReadTourInformationFromTextFile("BackUpData//BackUpTour.txt"));
+    SaveAccountToTextFile("Data//account.txt",ReadAccountInformationFromTextFile("BackUpData//BackUpAccount.txt"));
+    transportList = readTransportInformationFromTextFile("Data//transport.txt");
+    hotelList = readHotelInformationFromTextFile("Data//hotel.txt");
+    userList = readUserInformationFromTextFile("Data//userData.txt");
+    tripList = ReadTourInformationFromTextFile("Data//tour.txt");
+    accountList = ReadAccountInformationFromTextFile("Data//account.txt");
 }
-void SaveSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList){
-    SaveUserInformationToTextFile("BackUpData//BackUpUserData.txt",userList);
-    SaveTransportToTextFile("BackUpData//BackUpTransport.txt", transportList);
-    SaveHotelToTextFile("BackUpData//BackUpHotel.txt", hotelList);
-    SaveTourToTextFile("BackUpData//BackUpTour.txt", tripList);
-    SaveAccountToTextFile("BackUpData//BackUpAccount.txt",accountList);
+void SaveSystemData(){
+    SaveUserInformationToTextFile("BackUpData//BackUpUserData.txt",readUserInformationFromTextFile("Data//userData.txt"));
+    SaveTransportToTextFile("BackUpData//BackUpTransport.txt", readTransportInformationFromTextFile("Data//transport.txt"));
+    SaveHotelToTextFile("BackUpData//BackUpHotel.txt", readHotelInformationFromTextFile("Data//hotel.txt"));
+    SaveTourToTextFile("BackUpData//BackUpTour.txt", ReadTourInformationFromTextFile("Data//tour.txt"));
+    SaveAccountToTextFile("BackUpData//BackUpAccount.txt",ReadAccountInformationFromTextFile("Data//account.txt"));
+}
+void AdminManageSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList){
+    int n5;
+    do{
+        cout << "\n\t1: Save System Data";
+        cout << "\n\t2: Load System Data";  
+        cout << "\n\t0: Done";
+        cout << "\nEnter number in range 0 - 2: ";
+        cin >> n5;
+        if(n5 == 1){
+            SaveSystemData();
+            cout << "Save System Data Successful!!";
+        }
+        else if(n5 == 2){
+            LoadSystemData(userList,transportList,hotelList,tripList,accountList);
+            cout << "Load System Data Successful!!";
+        }       
+    }
+    while(n5 != 0); 
 }
 void AddTrip(Trip& trip){
     string str1,str2,str3,str4;
     int numPeople;
-    cout <<"\n\tEnter Trip Information!";
+    cout <<"\n\tEnter Tour Information!";
     cout << "\nEnter from: ";
     cin.ignore();
     getline(cin,str1);
@@ -382,16 +419,12 @@ void AddTrip(Trip& trip){
 Hotel AddHotel(vector<Hotel>& hotelList){
     Hotel y;
     vector<Hotel> x;
-    string address,date;
+    string address;
     int i = 0;
     do{
-        
         cout << "\nEnter hotel address: ";
         fflush(stdin);
         getline(cin,address);
-        // cout << "\nEnter from date (dd-mm-yy): ";
-        // cin >> date;       
-
         for(auto& h : hotelList){
             if(h.getHotelAddress() == NormalizeString(address)){
                 x.push_back(h);
@@ -414,14 +447,12 @@ Hotel AddHotel(vector<Hotel>& hotelList){
 Transport AddTransport(vector<Transport>& transportList){
     Transport y;
     vector<Transport> x;
-    string from,to,day;
+    string from,to;
     int i = 0;
     do{
         cout << "\nEnter from: ";
         fflush(stdin);
         getline(cin,from);
-        // cout << "\nEnter from date (dd-mm-yy): ";
-        // cin >> day;
         cout << "\nEnter to: ";
         getline(cin,to);
         for(auto& t : transportList){
@@ -498,8 +529,7 @@ void EditPersonalInformation(vector<User>& userList,string& loginName, string& l
             userList[index].setAccountPassword(pass_);
             cout << "\n\t->New Password edited!";
         }                                
-    }while(n3 != 0);
-    
+    }while(n3 != 0);    
 }
 
 Trip AddTourFromKeyboard(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){
@@ -533,15 +563,13 @@ Trip AddTourFromKeyboard(vector<Hotel>& hotelList, vector<Transport>& transportL
 }
 Trip AddAvailableTour(vector<Trip>& tripList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){
     ViewTourInformation(tripList);
-    // Trip tour;
-    cout << "\nWhich tour do you want to add? ";
+    cout << "\n\nWhich tour do you want to add? ";
     int index; 
     do{
         cout << "\n\tEnter tour you want to add (1 - " << tripList.size() << "): ";
         cin >> index;
     }
     while(index < 0 || index > tripList.size());
-    // tour.push_back(tripList[index-1]);
     hotelLogin.push_back(tripList[index-1].getPlace());
     transportLogin.push_back(tripList[index-1].getTransportType());
     cout << "\n -> Add Tour Successful";
@@ -550,7 +578,7 @@ Trip AddAvailableTour(vector<Trip>& tripList, vector<vector<Hotel>>& hotelLogin,
 void AddTourInformation(vector<Trip>& tour, vector<Trip>& tripList, vector<Hotel>& hotelList, vector<Transport>& transportList, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){   
     int n3;
     do{
-        cout << "\nWhat do you want to add? ";
+        cout << "\n\nWhat do you want to add? ";
         cout << "\n\t1: Add available tour ";
         cout << "\n\t2: Add tour from keyboard ";
         cout << "\n\t0: Done ";
@@ -558,14 +586,13 @@ void AddTourInformation(vector<Trip>& tour, vector<Trip>& tripList, vector<Hotel
         cin >> n3;
         if(n3 == 1){tour.push_back(AddAvailableTour(tripList,hotelLogin,transportLogin));}
         else if(n3 == 2){tour.push_back(AddTourFromKeyboard(hotelList,transportList,hotelLogin,transportLogin));}
-        
     }
     while(n3 != 0);
 }
 
 void ViewTourInformation(vector<Trip>& tour){
     if(tour.empty()){
-        cout << "\nNO DATA";
+        cout << "\n\n\tNO DATA ABOUT TOUR";
     }
     else{
         int i = 0;
@@ -574,11 +601,11 @@ void ViewTourInformation(vector<Trip>& tour){
             i++;
             cout << endl << i << "."; trip.printTrip();
         }
-    }
+    }   
 }
 void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportList, vector<Trip>& tour, vector<vector<Hotel>>& hotelLogin, vector<vector<Transport>>& transportLogin){
     if(tour.empty()){
-        cout << "\nNO DATA";
+        cout << "\n\n\tNO DATA ABOUT TOUR";
     }
     else{
         cout << "\nWhat trip number do you want to edit? ";
@@ -636,8 +663,7 @@ void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportL
                         }
                     }
                     else if(n4 == 3){
-                        DeleteElementInVector<Transport>(transportLogin[index-1],"transport");
-                        // DeleteTransport(transportLogin[index-1]);
+                        DeleteElementInVector<Transport>(transportLogin[index-1],"TRANSPORT");
                     }
                     tour[index-1].setTransportType(transportLogin[index-1]);
                 }
@@ -678,8 +704,7 @@ void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportL
                         }
                     }
                     else if(n4 == 3){
-                        DeleteElementInVector<Hotel>(hotelLogin[index-1],"hotel");
-                        // DeleteHotel(hotelLogin[index-1]);
+                        DeleteElementInVector<Hotel>(hotelLogin[index-1],"HOTEL");
                     }
                     tour[index-1].setPlace(hotelLogin[index-1]);
                 }
@@ -723,22 +748,6 @@ void EditTourInformation(vector<Hotel>& hotelList, vector<Transport>& transportL
         tour[index-1].setTripCost(Payment(hotelLogin[index-1],transportLogin[index-1])*tour[index-1].getNumberOfPeople());
     }
 }
-// void CancelTourHandles(vector<Trip>& tour){
-//     if(tour.empty()){
-//         cout << "\nNO DATA ABOUT TOUR!!";
-//     }
-//     else{
-//         cout << "\nWhich tour do you want to delete? ";
-//         int index; 
-//         do{
-//             cout << "\nEnter number in range (1 - " << tour.size() << "): ";
-//             cin >> index;
-//         }
-//         while(index < 0 || index > tour.size());
-//         tour.erase(tour.begin() + index - 1);
-//         cout << "\n\t -> Delete successful!";
-//     }    
-// }
 
 void SignUp(vector<User>& userList){
     string user_name,pass,name,addr;
@@ -820,16 +829,17 @@ void DeleteUserAccount(vector<Account>& accountList, vector<User>& userList){
             userList.erase(userList.begin() + i);
             check = true;
         }
-    }   
-    if(check = false){
+    }  
+    cout << check << endl; 
+    if(check == false){
         cout << "\nDo not exist account " << user_name << " !!";
     }
     else{
+        int x = accountList.size();
         if(!accountList.empty()){
-            for(int i = 0; i < accountList.size(); ++i){
+            for(int i = 0; i < x; ++i){
                 if(accountList[i].getUserAccount().getAccountName() == user_name){
                     accountList.erase(accountList.begin() + i);
-                    --i;
                 }
             } 
             SaveAccountToTextFile("Data//account.txt",accountList);
@@ -838,47 +848,6 @@ void DeleteUserAccount(vector<Account>& accountList, vector<User>& userList){
         cout << "\n\t->Account " << user_name << " deleted!";
     }
 }
-
-// void DeleteUserAccount(map<string,vector<Trip>>& booKing, vector<User>& userList){
-//     cout << "\n------------Delete User Account------------";
-//     cout << "\nWhich account do you want to delete? ";
-//     cout << "\nEnter username: ";
-//     string user_name;
-//     cin >> user_name;
-//     int index = -1;
-//     if(booKing.empty()){    
-//         for(int i = 0; i < userList.size(); ++i){
-//             if(userList[i].getAccountName() == user_name){
-//                 index = i;
-//                 break;
-//             }
-//         }
-//         if(index == -1){
-//             cout << "\nDo not exist account " << user_name << " !!";
-//         }
-//         else{
-//             userList.erase(userList.begin() + index);
-//             cout << "\n\t->Account " << user_name << " deleted!";
-//         }
-//     }
-//     else{
-//         bool check1 = false;
-//         for(auto& m : booKing){
-//             if(m.first == user_name){
-//                 check1 = true;
-//                 booKing.erase(user_name);
-//                 break;
-//             } 
-//         }
-//         if(check1 == false){
-//             cout << "\nDo not exist account " << user_name << " !!";
-//         }
-//         else{
-//             cout << "\n\t->Account" << user_name << " deleted!";
-//         }
-//     }
-//     SaveUserInformationToTextFile("Data//userData.txt",userList);
-// }
 
 void EditUserAccount(vector<User>& userList){
     cout << "\n------------Edit User Account------------";
@@ -905,22 +874,6 @@ void EditUserAccount(vector<User>& userList){
     }
     SaveUserInformationToTextFile("Data//userData.txt",userList);
 }
-// void AdminManageUserAccount(map<string,vector<Trip>>& booKing, vector<User>& userList){
-//     int n5;
-//     do{
-//         cout << "\n------------------------------------------------\n";
-//         cout << "\n\t***** User Account *****";
-//         cout << "\n\t1: View List User Account";
-//         cout << "\n\t2: Edit User Account";
-//         cout << "\n\t3: Delete User Account";
-//         cout << "\n\t0: Done";
-//         cout << "\nEnter number in range 0 - 3: ";
-//         cin >> n5;
-//         if(n5 == 1){ViewListUserAccount(userList);}
-//         else if(n5 == 2){EditUserAccount(userList);}
-//         else if(n5 == 3){DeleteUserAccount(booKing,userList);}       
-//     }while(n5 != 0);  
-// }
 
 void AdminManageUserAccount(vector<Account>& accountList, vector<User>& userList){
     int n5;
@@ -955,7 +908,6 @@ void AddNewHotel(vector<Hotel>& hotelList){
     getline(cin,date);
     cout << "\nEnter new room price: ";
     cin >> price;
-    // x.setHotelName(hotel_name);
     x.setHotelName(NormalizeString(hotel_name));
     x.setHotelAddress(NormalizeString(address));
     x.setRoomType(NormalizeString(room_type));

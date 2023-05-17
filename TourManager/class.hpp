@@ -33,7 +33,7 @@ public:
     float getRoomPrice(){return roomPrice;}
 
     void printHotel(){
-        cout << "Hotel: "  << hotelName << " " << hotelAddress << " " << roomType << " " << startDay << " " << roomPrice << endl;
+        cout << "Hotel: "  << hotelName << "  (" << hotelAddress << ")  Type: " << roomType << "  " << startDay << "  Cost: " << roomPrice << endl;
     }
 
 };
@@ -62,7 +62,7 @@ public:
     string getDestination(){return destination;}
     float getTicketPrice(){return ticketPrice;}
     void printTransport(){
-        cout << transportBrand << " " <<  transportName << " " <<  departurePlace << " " <<  destination << " " <<  departureDay << " " <<  ticketPrice << " " << endl;
+        cout << "Transport: " << transportBrand << "  Name: " <<  transportName << "  (" <<  departurePlace << ")->(" <<  destination << ") " <<  departureDay << "  Cost: " <<  ticketPrice << " " << endl;
     }
 };
 
@@ -101,7 +101,7 @@ public:
     }
 
     void printTrip(){
-        cout << "\n\n----------Trip Information----------";
+        cout << "\n----------Tour Information----------";
         cout << "\n" << startLocation << " to " << endLocation << " from " << fromDate << " to " << toDate << endl;
         for(auto& t : transportType){
             t.printTransport();

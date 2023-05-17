@@ -35,6 +35,9 @@ bool CheckPassword(string password);
 // Check tài khoản username trùng
 bool CheckUsername(string username,vector<User>& userList);
 //
+void TourInformationService();
+void AvaiableService();
+void BookTourMenu();
 void mainMenu();
 void UserMenu();
 void AdminMenu();
@@ -92,8 +95,9 @@ void AdminManageService(vector<Hotel>& hotelList, vector<Transport>& transportLi
 
         // 3
 // void LoadSystemData();
-void SaveSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList);
+void SaveSystemData();
 void LoadSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList);
+void AdminManageSystemData(vector<User>& userList,vector<Transport>& transportList,vector<Hotel>& hotelList,vector<Trip>& tripList,vector<Account>& accountList);
 
 // Sign Up
 void SignUp(vector<User>& userList);

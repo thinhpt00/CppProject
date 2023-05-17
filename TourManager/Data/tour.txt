@@ -1,3 +1,7 @@
 2;Vietnam Airlines;Mh-370;Ha Noi;Tphcm;23-05-2023;2000;Vietnam Airlines;Mh-370;Ha Noi;Tphcm;23-05-2023;2000;3;Ha Anh;Ha Noi;Single Room;12-5-2023;100;Ha Anh;Ha Noi;Single Room;12-5-2023;100;Ha Anh;Ha Noi;Single Room;12-5-2023;100;23-05-2023;23-05-2023;An Giang;Tay Ninh;5;3200;
 1;Jetstar Pacific Airlines;Md-885;Ha Noi;An Giang;23-05-2023;2200;1;Muong Thanh;Thanh Hoa;Double Room;8-9-2023;1000;23-05-2023;23-05-2023;Tay Nguyen;Quang Ninh;15;7000;
 1;Bamboo Airways;Mk-333;Ha Noi;Ha Giang;23-05-2023;1900;1;Minh Cuong;Phu Quoc;Double Room;12-5-2023;1100;23-05-2023;23-05-2023;Binh Dinh;Can Tho;15;63500;
+2;Vietnam Airlines;Mh-370;Ha Noi;Tphcm;23-05-2023;2000;Bamboo Airways;Mk-333;Tphcm;Ha Noi;23-05-2023;1900;1;The Reverie Saigon;tphcm;Deluxe Room;12-5-2023;1500;23-05-2023;25-05-2023;Vinh Phuc;Thanh pho Ho Chi Minh;4;13000;
+1;Vietjet Air;Mh-123;Ha Noi;Da Nang;23-05-2023;1800;1;Fusion Maia Da Nang;da nang;Family Room;12-5-2023;2000;23-05-2023;25-05-2023;Soc Son;Da Nang;10;35000;
+1;Jetstar Pacific Airlines;Md-885;Ha Noi;Nha trang;23-05-2023;1500;1;Six Senses Ninh Van Bay;khanh hoa;Deluxe Room;12-5-2023;1500;23-05-2023;25-05-2023;Long Bien;nha trang;3;7500;
+1;Pacific Airlines;Mh-120;Ha Noi;hue;23-05-2023;1200;1;Banyan Tree Lang Co;hue;Deluxe Room;12-5-2023;1500;23-05-2023;25-05-2023;dong anh;hue;7;18000;
